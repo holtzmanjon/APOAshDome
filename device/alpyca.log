@@ -1,0 +1,658 @@
+2023-12-17T18:03:32.167 INFO ==STARTUP== Serving on :5555. Time stamps are UTC.
+2023-12-17T18:07:17.707 INFO Disc rcv alpacadiscovery1 from ('10.0.0.201', 59131)
+2023-12-17T18:07:17.746 INFO 10.0.0.201 <- [1]
+2023-12-17T18:07:17.841 INFO 10.0.0.201 <- {'ServerName': 'Alpaca Sample Rotator ', 'Manufacturer': 'ASCOM Initiative', 'Version': '0.2', 'Location': 'Anywhere on Earth'}
+2023-12-17T18:07:17.883 INFO 10.0.0.201 <- [{'DeviceName': 'Sample Rotator', 'DeviceType': 'Rotator', 'DeviceNumber': 0, 'UniqueID': '1892ED30-92F3-4236-843E-DA8EEEF2D1CC'}]
+2023-12-17T18:08:07.303 INFO Disc rcv alpacadiscovery1 from ('10.0.0.201', 59131)
+2023-12-17T18:08:07.316 INFO 10.0.0.201 <- [1]
+2023-12-17T18:08:07.323 INFO 10.0.0.201 <- {'ServerName': 'Alpaca Sample Rotator ', 'Manufacturer': 'ASCOM Initiative', 'Version': '0.2', 'Location': 'Anywhere on Earth'}
+2023-12-17T18:08:07.327 INFO 10.0.0.201 <- [{'DeviceName': 'Sample Rotator', 'DeviceType': 'Rotator', 'DeviceNumber': 0, 'UniqueID': '1892ED30-92F3-4236-843E-DA8EEEF2D1CC'}]
+2023-12-17T18:08:20.340 INFO Disc rcv alpacadiscovery1 from ('10.0.0.201', 59131)
+2023-12-17T18:08:20.347 INFO 10.0.0.201 <- [1]
+2023-12-17T18:08:20.349 INFO 10.0.0.201 <- {'ServerName': 'Alpaca Sample Rotator ', 'Manufacturer': 'ASCOM Initiative', 'Version': '0.2', 'Location': 'Anywhere on Earth'}
+2023-12-17T18:08:20.360 INFO 10.0.0.201 <- [{'DeviceName': 'Sample Rotator', 'DeviceType': 'Rotator', 'DeviceNumber': 0, 'UniqueID': '1892ED30-92F3-4236-843E-DA8EEEF2D1CC'}]
+2023-12-17T18:08:28.088 INFO Disc rcv alpacadiscovery1 from ('10.0.0.201', 59131)
+2023-12-17T18:08:28.091 INFO 10.0.0.201 <- [1]
+2023-12-17T18:08:28.093 INFO 10.0.0.201 <- {'ServerName': 'Alpaca Sample Rotator ', 'Manufacturer': 'ASCOM Initiative', 'Version': '0.2', 'Location': 'Anywhere on Earth'}
+2023-12-17T18:08:28.104 INFO 10.0.0.201 <- [{'DeviceName': 'Sample Rotator', 'DeviceType': 'Rotator', 'DeviceNumber': 0, 'UniqueID': '1892ED30-92F3-4236-843E-DA8EEEF2D1CC'}]
+2023-12-17T18:08:33.543 INFO 10.0.0.201 -> PUT /api/v1/rotator/0/connected
+2023-12-17T18:08:33.544 INFO 10.0.0.201 -> {'Connected': 'True', 'ClientID': '1', 'ClientTransactionID': '1'}
+2023-12-17T18:08:33.545 INFO [connected]
+2023-12-17T18:08:33.593 INFO 10.0.0.201 -> GET /api/v1/rotator/0/interfaceversion?ClientID=1&ClientTransactionID=2
+2023-12-17T18:08:33.593 INFO 10.0.0.201 <- 3
+2023-12-17T18:08:33.624 INFO 10.0.0.201 -> GET /api/v1/rotator/0/description?ClientID=1&ClientTransactionID=3
+2023-12-17T18:08:33.624 INFO 10.0.0.201 <- Sample ASCOM Rotator
+2023-12-17T18:08:33.637 INFO 10.0.0.201 -> GET /api/v1/rotator/0/driverinfo?ClientID=1&ClientTransactionID=4
+2023-12-17T18:08:33.637 INFO 10.0.0.201 <- Alpaca Sample Device
+Implements Rotator
+ASCOM Initiative
+2023-12-17T18:08:33.643 INFO 10.0.0.201 -> GET /api/v1/rotator/0/driverversion?ClientID=1&ClientTransactionID=5
+2023-12-17T18:08:33.643 INFO 10.0.0.201 <- 0.2
+2023-12-17T18:08:33.647 INFO 10.0.0.201 -> GET /api/v1/rotator/0/name?ClientID=1&ClientTransactionID=6
+2023-12-17T18:08:33.647 INFO 10.0.0.201 <- Sample Rotator
+2023-12-17T18:08:33.655 INFO 10.0.0.201 -> GET /api/v1/rotator/0/supportedactions?ClientID=1&ClientTransactionID=7
+2023-12-17T18:08:33.656 INFO 10.0.0.201 <- []
+2023-12-17T18:08:33.694 INFO 10.0.0.201 -> GET /api/v1/rotator/0/canreverse?ClientID=1&ClientTransactionID=8
+2023-12-17T18:08:33.694 INFO 10.0.0.201 <- True
+2023-12-17T18:08:33.708 INFO 10.0.0.201 -> PUT /api/v1/rotator/0/halt
+2023-12-17T18:08:33.708 INFO 10.0.0.201 -> {'ClientID': '1', 'ClientTransactionID': '9'}
+2023-12-17T18:08:33.711 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=10
+2023-12-17T18:08:33.711 INFO 10.0.0.201 <- False
+2023-12-17T18:08:33.757 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=11
+2023-12-17T18:08:33.758 INFO 10.0.0.201 <- 0.0
+2023-12-17T18:08:33.768 INFO 10.0.0.201 -> GET /api/v1/rotator/0/mechanicalposition?ClientID=1&ClientTransactionID=12
+2023-12-17T18:08:33.769 INFO 10.0.0.201 <- 0.0
+2023-12-17T18:08:33.775 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=13
+2023-12-17T18:08:33.775 INFO 10.0.0.201 <- False
+2023-12-17T18:08:33.783 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=14
+2023-12-17T18:08:33.783 INFO 10.0.0.201 <- 0.0
+2023-12-17T18:08:33.787 INFO 10.0.0.201 -> GET /api/v1/rotator/0/targetposition?ClientID=1&ClientTransactionID=15
+2023-12-17T18:08:33.787 INFO 10.0.0.201 <- 0.0
+2023-12-17T18:08:33.789 INFO 10.0.0.201 -> GET /api/v1/rotator/0/stepsize?ClientID=1&ClientTransactionID=16
+2023-12-17T18:08:33.790 INFO 10.0.0.201 <- 1.0
+2023-12-17T18:08:33.792 INFO 10.0.0.201 -> GET /api/v1/rotator/0/reverse?ClientID=1&ClientTransactionID=17
+2023-12-17T18:08:33.792 INFO 10.0.0.201 <- False
+2023-12-17T18:08:33.801 INFO 10.0.0.201 -> PUT /api/v1/rotator/0/reverse
+2023-12-17T18:08:33.802 INFO 10.0.0.201 -> {'Reverse': 'True', 'ClientID': '1', 'ClientTransactionID': '18'}
+2023-12-17T18:08:33.803 INFO 10.0.0.201 -> PUT /api/v1/rotator/0/reverse
+2023-12-17T18:08:33.803 INFO 10.0.0.201 -> {'Reverse': 'False', 'ClientID': '1', 'ClientTransactionID': '19'}
+2023-12-17T18:08:33.806 INFO 10.0.0.201 -> GET /api/v1/rotator/0/mechanicalposition?ClientID=1&ClientTransactionID=20
+2023-12-17T18:08:33.807 INFO 10.0.0.201 <- 0.0
+2023-12-17T18:08:33.828 INFO 10.0.0.201 -> PUT /api/v1/rotator/0/halt
+2023-12-17T18:08:33.828 INFO 10.0.0.201 -> {'ClientID': '1', 'ClientTransactionID': '21'}
+2023-12-17T18:08:33.854 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=22
+2023-12-17T18:08:33.854 INFO 10.0.0.201 <- 0.0
+2023-12-17T18:08:33.857 INFO 10.0.0.201 -> PUT /api/v1/rotator/0/moveabsolute
+2023-12-17T18:08:33.858 INFO 10.0.0.201 -> {'Position': '45', 'ClientID': '1', 'ClientTransactionID': '23'}
+2023-12-17T18:08:33.861 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=24
+2023-12-17T18:08:33.861 INFO 10.0.0.201 <- True
+2023-12-17T18:08:33.890 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=25
+2023-12-17T18:08:33.890 INFO 10.0.0.201 <- 0.0
+2023-12-17T18:08:33.893 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=26
+2023-12-17T18:08:33.893 INFO 10.0.0.201 <- True
+2023-12-17T18:08:34.394 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=27
+2023-12-17T18:08:34.394 INFO 10.0.0.201 <- 3.0
+2023-12-17T18:08:34.396 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=28
+2023-12-17T18:08:34.397 INFO 10.0.0.201 <- True
+2023-12-17T18:08:34.893 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=29
+2023-12-17T18:08:34.893 INFO 10.0.0.201 <- 6.0
+2023-12-17T18:08:34.895 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=30
+2023-12-17T18:08:34.895 INFO 10.0.0.201 <- True
+2023-12-17T18:08:35.393 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=31
+2023-12-17T18:08:35.393 INFO 10.0.0.201 <- 9.0
+2023-12-17T18:08:35.402 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=32
+2023-12-17T18:08:35.403 INFO 10.0.0.201 <- True
+2023-12-17T18:08:35.892 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=33
+2023-12-17T18:08:35.893 INFO 10.0.0.201 <- 11.0
+2023-12-17T18:08:35.894 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=34
+2023-12-17T18:08:35.895 INFO 10.0.0.201 <- True
+2023-12-17T18:08:36.392 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=35
+2023-12-17T18:08:36.392 INFO 10.0.0.201 <- 14.0
+2023-12-17T18:08:36.394 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=36
+2023-12-17T18:08:36.394 INFO 10.0.0.201 <- True
+2023-12-17T18:08:36.892 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=37
+2023-12-17T18:08:36.892 INFO 10.0.0.201 <- 17.0
+2023-12-17T18:08:36.895 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=38
+2023-12-17T18:08:36.895 INFO 10.0.0.201 <- True
+2023-12-17T18:08:37.451 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=39
+2023-12-17T18:08:37.452 INFO 10.0.0.201 <- 21.0
+2023-12-17T18:08:37.457 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=40
+2023-12-17T18:08:37.457 INFO 10.0.0.201 <- True
+2023-12-17T18:08:37.897 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=41
+2023-12-17T18:08:37.897 INFO 10.0.0.201 <- 23.0
+2023-12-17T18:08:37.910 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=42
+2023-12-17T18:08:37.910 INFO 10.0.0.201 <- True
+2023-12-17T18:08:38.401 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=43
+2023-12-17T18:08:38.401 INFO 10.0.0.201 <- 26.0
+2023-12-17T18:08:38.409 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=44
+2023-12-17T18:08:38.410 INFO 10.0.0.201 <- True
+2023-12-17T18:08:38.890 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=45
+2023-12-17T18:08:38.890 INFO 10.0.0.201 <- 29.0
+2023-12-17T18:08:38.892 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=46
+2023-12-17T18:08:38.893 INFO 10.0.0.201 <- True
+2023-12-17T18:08:39.391 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=47
+2023-12-17T18:08:39.391 INFO 10.0.0.201 <- 32.0
+2023-12-17T18:08:39.393 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=48
+2023-12-17T18:08:39.393 INFO 10.0.0.201 <- True
+2023-12-17T18:08:39.890 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=49
+2023-12-17T18:08:39.891 INFO 10.0.0.201 <- 35.0
+2023-12-17T18:08:39.893 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=50
+2023-12-17T18:08:39.893 INFO 10.0.0.201 <- True
+2023-12-17T18:08:40.390 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=51
+2023-12-17T18:08:40.390 INFO 10.0.0.201 <- 38.0
+2023-12-17T18:08:40.392 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=52
+2023-12-17T18:08:40.392 INFO 10.0.0.201 <- True
+2023-12-17T18:08:40.889 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=53
+2023-12-17T18:08:40.889 INFO 10.0.0.201 <- 41.0
+2023-12-17T18:08:40.892 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=54
+2023-12-17T18:08:40.892 INFO 10.0.0.201 <- True
+2023-12-17T18:08:41.392 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=55
+2023-12-17T18:08:41.393 INFO 10.0.0.201 <- 44.0
+2023-12-17T18:08:41.396 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=56
+2023-12-17T18:08:41.396 INFO 10.0.0.201 <- True
+2023-12-17T18:08:41.898 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=57
+2023-12-17T18:08:41.898 INFO 10.0.0.201 <- 45.0
+2023-12-17T18:08:41.998 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=58
+2023-12-17T18:08:41.998 INFO 10.0.0.201 <- False
+2023-12-17T18:08:42.058 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=59
+2023-12-17T18:08:42.058 INFO 10.0.0.201 <- 45.0
+2023-12-17T18:08:42.092 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=60
+2023-12-17T18:08:42.092 INFO 10.0.0.201 <- 45.0
+2023-12-17T18:08:42.104 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=61
+2023-12-17T18:08:42.105 INFO 10.0.0.201 <- 45.0
+2023-12-17T18:08:42.125 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=62
+2023-12-17T18:08:42.125 INFO 10.0.0.201 <- 45.0
+2023-12-17T18:08:42.155 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=63
+2023-12-17T18:08:42.155 INFO 10.0.0.201 <- 45.0
+2023-12-17T18:08:42.186 INFO 10.0.0.201 -> PUT /api/v1/rotator/0/moveabsolute
+2023-12-17T18:08:42.187 INFO 10.0.0.201 -> {'Position': '135', 'ClientID': '1', 'ClientTransactionID': '64'}
+2023-12-17T18:08:42.210 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=65
+2023-12-17T18:08:42.210 INFO 10.0.0.201 <- True
+2023-12-17T18:08:42.230 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=66
+2023-12-17T18:08:42.230 INFO 10.0.0.201 <- 45.0
+2023-12-17T18:08:42.253 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=67
+2023-12-17T18:08:42.253 INFO 10.0.0.201 <- True
+2023-12-17T18:08:42.755 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=68
+2023-12-17T18:08:42.755 INFO 10.0.0.201 <- 48.0
+2023-12-17T18:08:42.786 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=69
+2023-12-17T18:08:42.787 INFO 10.0.0.201 <- True
+2023-12-17T18:08:43.246 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=70
+2023-12-17T18:08:43.246 INFO 10.0.0.201 <- 51.0
+2023-12-17T18:08:43.249 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=71
+2023-12-17T18:08:43.249 INFO 10.0.0.201 <- True
+2023-12-17T18:08:43.746 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=72
+2023-12-17T18:08:43.746 INFO 10.0.0.201 <- 54.0
+2023-12-17T18:08:43.752 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=73
+2023-12-17T18:08:43.752 INFO 10.0.0.201 <- True
+2023-12-17T18:08:44.245 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=74
+2023-12-17T18:08:44.246 INFO 10.0.0.201 <- 57.0
+2023-12-17T18:08:44.248 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=75
+2023-12-17T18:08:44.249 INFO 10.0.0.201 <- True
+2023-12-17T18:08:44.746 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=76
+2023-12-17T18:08:44.746 INFO 10.0.0.201 <- 60.0
+2023-12-17T18:08:44.752 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=77
+2023-12-17T18:08:44.753 INFO 10.0.0.201 <- True
+2023-12-17T18:08:45.245 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=78
+2023-12-17T18:08:45.245 INFO 10.0.0.201 <- 62.0
+2023-12-17T18:08:45.249 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=79
+2023-12-17T18:08:45.250 INFO 10.0.0.201 <- True
+2023-12-17T18:08:45.745 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=80
+2023-12-17T18:08:45.746 INFO 10.0.0.201 <- 65.0
+2023-12-17T18:08:45.748 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=81
+2023-12-17T18:08:45.748 INFO 10.0.0.201 <- True
+2023-12-17T18:08:46.245 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=82
+2023-12-17T18:08:46.245 INFO 10.0.0.201 <- 68.0
+2023-12-17T18:08:46.247 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=83
+2023-12-17T18:08:46.247 INFO 10.0.0.201 <- True
+2023-12-17T18:08:46.745 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=84
+2023-12-17T18:08:46.745 INFO 10.0.0.201 <- 71.0
+2023-12-17T18:08:46.748 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=85
+2023-12-17T18:08:46.748 INFO 10.0.0.201 <- True
+2023-12-17T18:08:47.245 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=86
+2023-12-17T18:08:47.245 INFO 10.0.0.201 <- 74.0
+2023-12-17T18:08:47.247 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=87
+2023-12-17T18:08:47.247 INFO 10.0.0.201 <- True
+2023-12-17T18:08:47.745 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=88
+2023-12-17T18:08:47.745 INFO 10.0.0.201 <- 77.0
+2023-12-17T18:08:47.747 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=89
+2023-12-17T18:08:47.747 INFO 10.0.0.201 <- True
+2023-12-17T18:08:48.245 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=90
+2023-12-17T18:08:48.245 INFO 10.0.0.201 <- 80.0
+2023-12-17T18:08:48.248 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=91
+2023-12-17T18:08:48.248 INFO 10.0.0.201 <- True
+2023-12-17T18:08:48.743 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=92
+2023-12-17T18:08:48.744 INFO 10.0.0.201 <- 83.0
+2023-12-17T18:08:48.746 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=93
+2023-12-17T18:08:48.746 INFO 10.0.0.201 <- True
+2023-12-17T18:08:49.244 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=94
+2023-12-17T18:08:49.245 INFO 10.0.0.201 <- 86.0
+2023-12-17T18:08:49.247 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=95
+2023-12-17T18:08:49.247 INFO 10.0.0.201 <- True
+2023-12-17T18:08:49.745 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=96
+2023-12-17T18:08:49.745 INFO 10.0.0.201 <- 89.0
+2023-12-17T18:08:49.747 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=97
+2023-12-17T18:08:49.747 INFO 10.0.0.201 <- True
+2023-12-17T18:08:50.243 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=98
+2023-12-17T18:08:50.244 INFO 10.0.0.201 <- 92.0
+2023-12-17T18:08:50.246 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=99
+2023-12-17T18:08:50.246 INFO 10.0.0.201 <- True
+2023-12-17T18:08:50.744 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=100
+2023-12-17T18:08:50.745 INFO 10.0.0.201 <- 95.0
+2023-12-17T18:08:50.747 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=101
+2023-12-17T18:08:50.747 INFO 10.0.0.201 <- True
+2023-12-17T18:08:51.243 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=102
+2023-12-17T18:08:51.243 INFO 10.0.0.201 <- 98.0
+2023-12-17T18:08:51.245 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=103
+2023-12-17T18:08:51.245 INFO 10.0.0.201 <- True
+2023-12-17T18:08:51.785 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=104
+2023-12-17T18:08:51.785 INFO 10.0.0.201 <- 101.0
+2023-12-17T18:08:51.818 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=105
+2023-12-17T18:08:51.818 INFO 10.0.0.201 <- True
+2023-12-17T18:08:52.245 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=106
+2023-12-17T18:08:52.245 INFO 10.0.0.201 <- 104.0
+2023-12-17T18:08:52.260 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=107
+2023-12-17T18:08:52.261 INFO 10.0.0.201 <- True
+2023-12-17T18:08:52.744 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=108
+2023-12-17T18:08:52.744 INFO 10.0.0.201 <- 107.0
+2023-12-17T18:08:52.746 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=109
+2023-12-17T18:08:52.746 INFO 10.0.0.201 <- True
+2023-12-17T18:08:53.243 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=110
+2023-12-17T18:08:53.244 INFO 10.0.0.201 <- 110.0
+2023-12-17T18:08:53.246 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=111
+2023-12-17T18:08:53.246 INFO 10.0.0.201 <- True
+2023-12-17T18:08:53.743 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=112
+2023-12-17T18:08:53.743 INFO 10.0.0.201 <- 113.0
+2023-12-17T18:08:53.745 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=113
+2023-12-17T18:08:53.745 INFO 10.0.0.201 <- True
+2023-12-17T18:08:54.243 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=114
+2023-12-17T18:08:54.243 INFO 10.0.0.201 <- 116.0
+2023-12-17T18:08:54.245 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=115
+2023-12-17T18:08:54.246 INFO 10.0.0.201 <- True
+2023-12-17T18:08:54.744 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=116
+2023-12-17T18:08:54.744 INFO 10.0.0.201 <- 118.0
+2023-12-17T18:08:54.746 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=117
+2023-12-17T18:08:54.747 INFO 10.0.0.201 <- True
+2023-12-17T18:08:55.242 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=118
+2023-12-17T18:08:55.242 INFO 10.0.0.201 <- 121.0
+2023-12-17T18:08:55.245 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=119
+2023-12-17T18:08:55.245 INFO 10.0.0.201 <- True
+2023-12-17T18:08:55.743 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=120
+2023-12-17T18:08:55.743 INFO 10.0.0.201 <- 124.0
+2023-12-17T18:08:55.745 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=121
+2023-12-17T18:08:55.745 INFO 10.0.0.201 <- True
+2023-12-17T18:08:56.243 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=122
+2023-12-17T18:08:56.244 INFO 10.0.0.201 <- 127.0
+2023-12-17T18:08:56.247 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=123
+2023-12-17T18:08:56.247 INFO 10.0.0.201 <- True
+2023-12-17T18:08:56.743 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=124
+2023-12-17T18:08:56.743 INFO 10.0.0.201 <- 130.0
+2023-12-17T18:08:56.746 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=125
+2023-12-17T18:08:56.746 INFO 10.0.0.201 <- True
+2023-12-17T18:08:57.242 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=126
+2023-12-17T18:08:57.243 INFO 10.0.0.201 <- 133.0
+2023-12-17T18:08:57.245 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=127
+2023-12-17T18:08:57.245 INFO 10.0.0.201 <- True
+2023-12-17T18:08:57.742 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=128
+2023-12-17T18:08:57.743 INFO 10.0.0.201 <- 135.0
+2023-12-17T18:08:57.744 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=129
+2023-12-17T18:08:57.745 INFO 10.0.0.201 <- False
+2023-12-17T18:08:57.747 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=130
+2023-12-17T18:08:57.747 INFO 10.0.0.201 <- 135.0
+2023-12-17T18:08:57.750 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=131
+2023-12-17T18:08:57.751 INFO 10.0.0.201 <- 135.0
+2023-12-17T18:08:57.752 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=132
+2023-12-17T18:08:57.752 INFO 10.0.0.201 <- 135.0
+2023-12-17T18:08:57.753 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=133
+2023-12-17T18:08:57.754 INFO 10.0.0.201 <- 135.0
+2023-12-17T18:08:57.760 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=134
+2023-12-17T18:08:57.760 INFO 10.0.0.201 <- 135.0
+2023-12-17T18:08:57.762 INFO 10.0.0.201 -> PUT /api/v1/rotator/0/moveabsolute
+2023-12-17T18:08:57.762 INFO 10.0.0.201 -> {'Position': '225', 'ClientID': '1', 'ClientTransactionID': '135'}
+2023-12-17T18:08:57.764 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=136
+2023-12-17T18:08:57.764 INFO 10.0.0.201 <- True
+2023-12-17T18:08:57.766 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=137
+2023-12-17T18:08:57.766 INFO 10.0.0.201 <- 135.0
+2023-12-17T18:08:57.767 INFO 10.0.0.201 -> GET /api/v1/rotator/0/ismoving?ClientID=1&ClientTransactionID=138
+2023-12-17T18:08:57.768 INFO 10.0.0.201 <- True
+2023-12-17T18:09:50.270 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=139
+2023-12-17T18:09:50.272 INFO 10.0.0.201 <- 137.0
+2023-12-17T18:09:50.273 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=140
+2023-12-17T18:09:50.274 INFO 10.0.0.201 <- 137.0
+2023-12-17T18:09:50.275 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=141
+2023-12-17T18:09:50.275 INFO 10.0.0.201 <- 137.0
+2023-12-17T18:09:50.276 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=142
+2023-12-17T18:09:50.276 INFO 10.0.0.201 <- 137.0
+2023-12-17T18:09:50.277 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=143
+2023-12-17T18:09:50.278 INFO 10.0.0.201 <- 137.0
+2023-12-17T18:09:50.280 INFO 10.0.0.201 -> PUT /api/v1/rotator/0/moveabsolute
+2023-12-17T18:09:50.281 INFO 10.0.0.201 -> {'Position': '315', 'ClientID': '1', 'ClientTransactionID': '144'}
+2023-12-17T18:09:50.288 ERROR DriverException: Rotator.MoveAbsolute failed
+Traceback (most recent call last):
+  File "/Users/holtz/git/AlpycaDevice/device/rotator.py", line 512, in on_put
+    rot_dev.MoveAbsolute(newpos)    # async
+  File "/Users/holtz/git/AlpycaDevice/device/rotatordevice.py", line 300, in MoveAbsolute
+    raise RuntimeError('Cannot start a move while the rotator is moving')
+RuntimeError: Cannot start a move while the rotator is moving
+
+2023-12-17T18:09:50.300 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=145
+2023-12-17T18:09:50.300 INFO 10.0.0.201 <- 137.0
+2023-12-17T18:09:50.307 INFO 10.0.0.201 -> PUT /api/v1/rotator/0/moveabsolute
+2023-12-17T18:09:50.307 INFO 10.0.0.201 -> {'Position': '-405', 'ClientID': '1', 'ClientTransactionID': '146'}
+2023-12-17T18:09:50.307 ERROR InvalidValueException: Invalid position -405.0 outside range 0 <= pos < 360.
+2023-12-17T18:09:50.311 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=147
+2023-12-17T18:09:50.311 INFO 10.0.0.201 <- 137.0
+2023-12-17T18:09:50.315 INFO 10.0.0.201 -> PUT /api/v1/rotator/0/moveabsolute
+2023-12-17T18:09:50.315 INFO 10.0.0.201 -> {'Position': '405', 'ClientID': '1', 'ClientTransactionID': '148'}
+2023-12-17T18:09:50.315 ERROR InvalidValueException: Invalid position 405.0 outside range 0 <= pos < 360.
+2023-12-17T18:09:50.318 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=149
+2023-12-17T18:09:50.319 INFO 10.0.0.201 <- 137.0
+2023-12-17T18:09:50.320 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=150
+2023-12-17T18:09:50.321 INFO 10.0.0.201 <- 137.0
+2023-12-17T18:09:50.322 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=151
+2023-12-17T18:09:50.322 INFO 10.0.0.201 <- 137.0
+2023-12-17T18:09:50.324 INFO 10.0.0.201 -> PUT /api/v1/rotator/0/move
+2023-12-17T18:09:50.324 INFO 10.0.0.201 -> {'Position': '-10', 'ClientID': '1', 'ClientTransactionID': '152'}
+2023-12-17T18:09:50.325 ERROR DriverException: Rotator.Move failed
+Traceback (most recent call last):
+  File "/Users/holtz/git/AlpycaDevice/device/rotator.py", line 460, in on_put
+    rot_dev.Move(newpos)    # async
+  File "/Users/holtz/git/AlpycaDevice/device/rotatordevice.py", line 284, in Move
+    raise RuntimeError('Cannot start a move while the rotator is moving')
+RuntimeError: Cannot start a move while the rotator is moving
+
+2023-12-17T18:09:50.328 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=153
+2023-12-17T18:09:50.328 INFO 10.0.0.201 <- 137.0
+2023-12-17T18:09:50.331 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=154
+2023-12-17T18:09:50.331 INFO 10.0.0.201 <- 137.0
+2023-12-17T18:09:50.333 INFO 10.0.0.201 -> PUT /api/v1/rotator/0/move
+2023-12-17T18:09:50.333 INFO 10.0.0.201 -> {'Position': '10', 'ClientID': '1', 'ClientTransactionID': '155'}
+2023-12-17T18:09:50.333 ERROR DriverException: Rotator.Move failed
+Traceback (most recent call last):
+  File "/Users/holtz/git/AlpycaDevice/device/rotator.py", line 460, in on_put
+    rot_dev.Move(newpos)    # async
+  File "/Users/holtz/git/AlpycaDevice/device/rotatordevice.py", line 284, in Move
+    raise RuntimeError('Cannot start a move while the rotator is moving')
+RuntimeError: Cannot start a move while the rotator is moving
+
+2023-12-17T18:09:50.339 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=156
+2023-12-17T18:09:50.339 INFO 10.0.0.201 <- 137.0
+2023-12-17T18:09:50.341 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=157
+2023-12-17T18:09:50.341 INFO 10.0.0.201 <- 137.0
+2023-12-17T18:09:50.348 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=158
+2023-12-17T18:09:50.349 INFO 10.0.0.201 <- 137.0
+2023-12-17T18:09:50.357 INFO 10.0.0.201 -> PUT /api/v1/rotator/0/move
+2023-12-17T18:09:50.357 INFO 10.0.0.201 -> {'Position': '-40', 'ClientID': '1', 'ClientTransactionID': '159'}
+2023-12-17T18:09:50.357 ERROR DriverException: Rotator.Move failed
+Traceback (most recent call last):
+  File "/Users/holtz/git/AlpycaDevice/device/rotator.py", line 460, in on_put
+    rot_dev.Move(newpos)    # async
+  File "/Users/holtz/git/AlpycaDevice/device/rotatordevice.py", line 284, in Move
+    raise RuntimeError('Cannot start a move while the rotator is moving')
+RuntimeError: Cannot start a move while the rotator is moving
+
+2023-12-17T18:09:50.365 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=160
+2023-12-17T18:09:50.365 INFO 10.0.0.201 <- 137.0
+2023-12-17T18:09:50.367 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=161
+2023-12-17T18:09:50.368 INFO 10.0.0.201 <- 137.0
+2023-12-17T18:09:50.369 INFO 10.0.0.201 -> PUT /api/v1/rotator/0/move
+2023-12-17T18:09:50.369 INFO 10.0.0.201 -> {'Position': '40', 'ClientID': '1', 'ClientTransactionID': '162'}
+2023-12-17T18:09:50.369 ERROR DriverException: Rotator.Move failed
+Traceback (most recent call last):
+  File "/Users/holtz/git/AlpycaDevice/device/rotator.py", line 460, in on_put
+    rot_dev.Move(newpos)    # async
+  File "/Users/holtz/git/AlpycaDevice/device/rotatordevice.py", line 284, in Move
+    raise RuntimeError('Cannot start a move while the rotator is moving')
+RuntimeError: Cannot start a move while the rotator is moving
+
+2023-12-17T18:09:50.382 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=163
+2023-12-17T18:09:50.382 INFO 10.0.0.201 <- 137.0
+2023-12-17T18:09:50.384 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=164
+2023-12-17T18:09:50.384 INFO 10.0.0.201 <- 137.0
+2023-12-17T18:09:50.387 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=165
+2023-12-17T18:09:50.387 INFO 10.0.0.201 <- 137.0
+2023-12-17T18:09:50.388 INFO 10.0.0.201 -> PUT /api/v1/rotator/0/move
+2023-12-17T18:09:50.388 INFO 10.0.0.201 -> {'Position': '-130', 'ClientID': '1', 'ClientTransactionID': '166'}
+2023-12-17T18:09:50.388 ERROR DriverException: Rotator.Move failed
+Traceback (most recent call last):
+  File "/Users/holtz/git/AlpycaDevice/device/rotator.py", line 460, in on_put
+    rot_dev.Move(newpos)    # async
+  File "/Users/holtz/git/AlpycaDevice/device/rotatordevice.py", line 284, in Move
+    raise RuntimeError('Cannot start a move while the rotator is moving')
+RuntimeError: Cannot start a move while the rotator is moving
+
+2023-12-17T18:09:50.392 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=167
+2023-12-17T18:09:50.392 INFO 10.0.0.201 <- 137.0
+2023-12-17T18:09:50.395 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=168
+2023-12-17T18:09:50.395 INFO 10.0.0.201 <- 137.0
+2023-12-17T18:09:50.396 INFO 10.0.0.201 -> PUT /api/v1/rotator/0/move
+2023-12-17T18:09:50.396 INFO 10.0.0.201 -> {'Position': '130', 'ClientID': '1', 'ClientTransactionID': '169'}
+2023-12-17T18:09:50.397 ERROR DriverException: Rotator.Move failed
+Traceback (most recent call last):
+  File "/Users/holtz/git/AlpycaDevice/device/rotator.py", line 460, in on_put
+    rot_dev.Move(newpos)    # async
+  File "/Users/holtz/git/AlpycaDevice/device/rotatordevice.py", line 284, in Move
+    raise RuntimeError('Cannot start a move while the rotator is moving')
+RuntimeError: Cannot start a move while the rotator is moving
+
+2023-12-17T18:09:50.399 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=170
+2023-12-17T18:09:50.399 INFO 10.0.0.201 <- 137.0
+2023-12-17T18:09:50.402 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=171
+2023-12-17T18:09:50.402 INFO 10.0.0.201 <- 137.0
+2023-12-17T18:09:50.403 INFO 10.0.0.201 -> PUT /api/v1/rotator/0/move
+2023-12-17T18:09:50.403 INFO 10.0.0.201 -> {'Position': '-375', 'ClientID': '1', 'ClientTransactionID': '172'}
+2023-12-17T18:09:50.404 ERROR DriverException: Rotator.Move failed
+Traceback (most recent call last):
+  File "/Users/holtz/git/AlpycaDevice/device/rotator.py", line 460, in on_put
+    rot_dev.Move(newpos)    # async
+  File "/Users/holtz/git/AlpycaDevice/device/rotatordevice.py", line 284, in Move
+    raise RuntimeError('Cannot start a move while the rotator is moving')
+RuntimeError: Cannot start a move while the rotator is moving
+
+2023-12-17T18:09:50.406 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=173
+2023-12-17T18:09:50.407 INFO 10.0.0.201 <- 137.0
+2023-12-17T18:09:50.409 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=174
+2023-12-17T18:09:50.409 INFO 10.0.0.201 <- 137.0
+2023-12-17T18:09:50.410 INFO 10.0.0.201 -> PUT /api/v1/rotator/0/move
+2023-12-17T18:09:50.411 INFO 10.0.0.201 -> {'Position': '375', 'ClientID': '1', 'ClientTransactionID': '175'}
+2023-12-17T18:09:50.411 ERROR DriverException: Rotator.Move failed
+Traceback (most recent call last):
+  File "/Users/holtz/git/AlpycaDevice/device/rotator.py", line 460, in on_put
+    rot_dev.Move(newpos)    # async
+  File "/Users/holtz/git/AlpycaDevice/device/rotatordevice.py", line 284, in Move
+    raise RuntimeError('Cannot start a move while the rotator is moving')
+RuntimeError: Cannot start a move while the rotator is moving
+
+2023-12-17T18:09:50.413 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=176
+2023-12-17T18:09:50.413 INFO 10.0.0.201 <- 137.0
+2023-12-17T18:09:50.417 INFO 10.0.0.201 -> PUT /api/v1/rotator/0/movemechanical
+2023-12-17T18:09:50.417 INFO 10.0.0.201 -> {'Position': '45', 'ClientID': '1', 'ClientTransactionID': '177'}
+2023-12-17T18:09:50.417 ERROR DriverException: Rotator.MoveMechanical failed
+Traceback (most recent call last):
+  File "/Users/holtz/git/AlpycaDevice/device/rotator.py", line 566, in on_put
+    rot_dev.MoveMechanical(newpos)    # async
+  File "/Users/holtz/git/AlpycaDevice/device/rotatordevice.py", line 310, in MoveMechanical
+    raise RuntimeError('Cannot start a move while the rotator is moving')
+RuntimeError: Cannot start a move while the rotator is moving
+
+2023-12-17T18:09:50.420 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=178
+2023-12-17T18:09:50.420 INFO 10.0.0.201 <- 137.0
+2023-12-17T18:09:50.422 INFO 10.0.0.201 -> PUT /api/v1/rotator/0/movemechanical
+2023-12-17T18:09:50.422 INFO 10.0.0.201 -> {'Position': '135', 'ClientID': '1', 'ClientTransactionID': '179'}
+2023-12-17T18:09:50.424 ERROR DriverException: Rotator.MoveMechanical failed
+Traceback (most recent call last):
+  File "/Users/holtz/git/AlpycaDevice/device/rotator.py", line 566, in on_put
+    rot_dev.MoveMechanical(newpos)    # async
+  File "/Users/holtz/git/AlpycaDevice/device/rotatordevice.py", line 310, in MoveMechanical
+    raise RuntimeError('Cannot start a move while the rotator is moving')
+RuntimeError: Cannot start a move while the rotator is moving
+
+2023-12-17T18:09:50.430 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=180
+2023-12-17T18:09:50.430 INFO 10.0.0.201 <- 137.0
+2023-12-17T18:09:50.433 INFO 10.0.0.201 -> PUT /api/v1/rotator/0/movemechanical
+2023-12-17T18:09:50.433 INFO 10.0.0.201 -> {'Position': '225', 'ClientID': '1', 'ClientTransactionID': '181'}
+2023-12-17T18:09:50.433 ERROR DriverException: Rotator.MoveMechanical failed
+Traceback (most recent call last):
+  File "/Users/holtz/git/AlpycaDevice/device/rotator.py", line 566, in on_put
+    rot_dev.MoveMechanical(newpos)    # async
+  File "/Users/holtz/git/AlpycaDevice/device/rotatordevice.py", line 310, in MoveMechanical
+    raise RuntimeError('Cannot start a move while the rotator is moving')
+RuntimeError: Cannot start a move while the rotator is moving
+
+2023-12-17T18:09:50.436 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=182
+2023-12-17T18:09:50.436 INFO 10.0.0.201 <- 138.0
+2023-12-17T18:09:50.439 INFO 10.0.0.201 -> PUT /api/v1/rotator/0/movemechanical
+2023-12-17T18:09:50.440 INFO 10.0.0.201 -> {'Position': '315', 'ClientID': '1', 'ClientTransactionID': '183'}
+2023-12-17T18:09:50.440 ERROR DriverException: Rotator.MoveMechanical failed
+Traceback (most recent call last):
+  File "/Users/holtz/git/AlpycaDevice/device/rotator.py", line 566, in on_put
+    rot_dev.MoveMechanical(newpos)    # async
+  File "/Users/holtz/git/AlpycaDevice/device/rotatordevice.py", line 310, in MoveMechanical
+    raise RuntimeError('Cannot start a move while the rotator is moving')
+RuntimeError: Cannot start a move while the rotator is moving
+
+2023-12-17T18:09:50.445 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=184
+2023-12-17T18:09:50.445 INFO 10.0.0.201 <- 138.0
+2023-12-17T18:09:50.447 INFO 10.0.0.201 -> PUT /api/v1/rotator/0/movemechanical
+2023-12-17T18:09:50.447 INFO 10.0.0.201 -> {'Position': '-405', 'ClientID': '1', 'ClientTransactionID': '185'}
+2023-12-17T18:09:50.447 ERROR InvalidValueException: Invalid position -405.0 outside range 0 <= pos < 360.
+2023-12-17T18:09:50.456 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=186
+2023-12-17T18:09:50.456 INFO 10.0.0.201 <- 138.0
+2023-12-17T18:09:50.459 INFO 10.0.0.201 -> PUT /api/v1/rotator/0/movemechanical
+2023-12-17T18:09:50.459 INFO 10.0.0.201 -> {'Position': '405', 'ClientID': '1', 'ClientTransactionID': '187'}
+2023-12-17T18:09:50.460 ERROR InvalidValueException: Invalid position 405.0 outside range 0 <= pos < 360.
+2023-12-17T18:09:50.463 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=188
+2023-12-17T18:09:50.463 INFO 10.0.0.201 <- 138.0
+2023-12-17T18:09:50.466 INFO 10.0.0.201 -> PUT /api/v1/rotator/0/movemechanical
+2023-12-17T18:09:50.466 INFO 10.0.0.201 -> {'Position': '90', 'ClientID': '1', 'ClientTransactionID': '189'}
+2023-12-17T18:09:50.466 ERROR DriverException: Rotator.MoveMechanical failed
+Traceback (most recent call last):
+  File "/Users/holtz/git/AlpycaDevice/device/rotator.py", line 566, in on_put
+    rot_dev.MoveMechanical(newpos)    # async
+  File "/Users/holtz/git/AlpycaDevice/device/rotatordevice.py", line 310, in MoveMechanical
+    raise RuntimeError('Cannot start a move while the rotator is moving')
+RuntimeError: Cannot start a move while the rotator is moving
+
+2023-12-17T18:09:50.469 INFO 10.0.0.201 -> PUT /api/v1/rotator/0/sync
+2023-12-17T18:09:50.469 INFO 10.0.0.201 -> {'Position': '90', 'ClientID': '1', 'ClientTransactionID': '190'}
+2023-12-17T18:09:50.470 ERROR DriverException: Rotator.Sync failed
+Traceback (most recent call last):
+  File "/Users/holtz/git/AlpycaDevice/device/rotator.py", line 616, in on_put
+    rot_dev.Sync(newpos)
+  File "/Users/holtz/git/AlpycaDevice/device/rotatordevice.py", line 322, in Sync
+    raise RuntimeError('Cannot sync while rotator is moving')
+RuntimeError: Cannot sync while rotator is moving
+
+2023-12-17T18:09:50.472 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=191
+2023-12-17T18:09:50.472 INFO 10.0.0.201 <- 138.0
+2023-12-17T18:09:50.474 INFO 10.0.0.201 -> PUT /api/v1/rotator/0/movemechanical
+2023-12-17T18:09:50.474 INFO 10.0.0.201 -> {'Position': '90', 'ClientID': '1', 'ClientTransactionID': '192'}
+2023-12-17T18:09:50.475 ERROR DriverException: Rotator.MoveMechanical failed
+Traceback (most recent call last):
+  File "/Users/holtz/git/AlpycaDevice/device/rotator.py", line 566, in on_put
+    rot_dev.MoveMechanical(newpos)    # async
+  File "/Users/holtz/git/AlpycaDevice/device/rotatordevice.py", line 310, in MoveMechanical
+    raise RuntimeError('Cannot start a move while the rotator is moving')
+RuntimeError: Cannot start a move while the rotator is moving
+
+2023-12-17T18:09:50.479 INFO 10.0.0.201 -> PUT /api/v1/rotator/0/sync
+2023-12-17T18:09:50.479 INFO 10.0.0.201 -> {'Position': '120', 'ClientID': '1', 'ClientTransactionID': '193'}
+2023-12-17T18:09:50.479 ERROR DriverException: Rotator.Sync failed
+Traceback (most recent call last):
+  File "/Users/holtz/git/AlpycaDevice/device/rotator.py", line 616, in on_put
+    rot_dev.Sync(newpos)
+  File "/Users/holtz/git/AlpycaDevice/device/rotatordevice.py", line 322, in Sync
+    raise RuntimeError('Cannot sync while rotator is moving')
+RuntimeError: Cannot sync while rotator is moving
+
+2023-12-17T18:09:50.484 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=194
+2023-12-17T18:09:50.484 INFO 10.0.0.201 <- 138.0
+2023-12-17T18:09:50.486 INFO 10.0.0.201 -> PUT /api/v1/rotator/0/movemechanical
+2023-12-17T18:09:50.487 INFO 10.0.0.201 -> {'Position': '90', 'ClientID': '1', 'ClientTransactionID': '195'}
+2023-12-17T18:09:50.487 ERROR DriverException: Rotator.MoveMechanical failed
+Traceback (most recent call last):
+  File "/Users/holtz/git/AlpycaDevice/device/rotator.py", line 566, in on_put
+    rot_dev.MoveMechanical(newpos)    # async
+  File "/Users/holtz/git/AlpycaDevice/device/rotatordevice.py", line 310, in MoveMechanical
+    raise RuntimeError('Cannot start a move while the rotator is moving')
+RuntimeError: Cannot start a move while the rotator is moving
+
+2023-12-17T18:09:50.489 INFO 10.0.0.201 -> PUT /api/v1/rotator/0/sync
+2023-12-17T18:09:50.490 INFO 10.0.0.201 -> {'Position': '60', 'ClientID': '1', 'ClientTransactionID': '196'}
+2023-12-17T18:09:50.490 ERROR DriverException: Rotator.Sync failed
+Traceback (most recent call last):
+  File "/Users/holtz/git/AlpycaDevice/device/rotator.py", line 616, in on_put
+    rot_dev.Sync(newpos)
+  File "/Users/holtz/git/AlpycaDevice/device/rotatordevice.py", line 322, in Sync
+    raise RuntimeError('Cannot sync while rotator is moving')
+RuntimeError: Cannot sync while rotator is moving
+
+2023-12-17T18:09:50.497 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=197
+2023-12-17T18:09:50.497 INFO 10.0.0.201 <- 138.0
+2023-12-17T18:09:50.499 INFO 10.0.0.201 -> PUT /api/v1/rotator/0/movemechanical
+2023-12-17T18:09:50.499 INFO 10.0.0.201 -> {'Position': '0', 'ClientID': '1', 'ClientTransactionID': '198'}
+2023-12-17T18:09:50.500 ERROR DriverException: Rotator.MoveMechanical failed
+Traceback (most recent call last):
+  File "/Users/holtz/git/AlpycaDevice/device/rotator.py", line 566, in on_put
+    rot_dev.MoveMechanical(newpos)    # async
+  File "/Users/holtz/git/AlpycaDevice/device/rotatordevice.py", line 310, in MoveMechanical
+    raise RuntimeError('Cannot start a move while the rotator is moving')
+RuntimeError: Cannot start a move while the rotator is moving
+
+2023-12-17T18:09:50.553 INFO 10.0.0.201 -> PUT /api/v1/rotator/0/sync
+2023-12-17T18:09:50.553 INFO 10.0.0.201 -> {'Position': '0', 'ClientID': '1', 'ClientTransactionID': '199'}
+2023-12-17T18:09:50.553 ERROR DriverException: Rotator.Sync failed
+Traceback (most recent call last):
+  File "/Users/holtz/git/AlpycaDevice/device/rotator.py", line 616, in on_put
+    rot_dev.Sync(newpos)
+  File "/Users/holtz/git/AlpycaDevice/device/rotatordevice.py", line 322, in Sync
+    raise RuntimeError('Cannot sync while rotator is moving')
+RuntimeError: Cannot sync while rotator is moving
+
+2023-12-17T18:09:50.561 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=200
+2023-12-17T18:09:50.561 INFO 10.0.0.201 <- 138.0
+2023-12-17T18:09:50.564 INFO 10.0.0.201 -> PUT /api/v1/rotator/0/movemechanical
+2023-12-17T18:09:50.564 INFO 10.0.0.201 -> {'Position': '0', 'ClientID': '1', 'ClientTransactionID': '201'}
+2023-12-17T18:09:50.564 ERROR DriverException: Rotator.MoveMechanical failed
+Traceback (most recent call last):
+  File "/Users/holtz/git/AlpycaDevice/device/rotator.py", line 566, in on_put
+    rot_dev.MoveMechanical(newpos)    # async
+  File "/Users/holtz/git/AlpycaDevice/device/rotatordevice.py", line 310, in MoveMechanical
+    raise RuntimeError('Cannot start a move while the rotator is moving')
+RuntimeError: Cannot start a move while the rotator is moving
+
+2023-12-17T18:09:50.566 INFO 10.0.0.201 -> PUT /api/v1/rotator/0/sync
+2023-12-17T18:09:50.567 INFO 10.0.0.201 -> {'Position': '30', 'ClientID': '1', 'ClientTransactionID': '202'}
+2023-12-17T18:09:50.567 ERROR DriverException: Rotator.Sync failed
+Traceback (most recent call last):
+  File "/Users/holtz/git/AlpycaDevice/device/rotator.py", line 616, in on_put
+    rot_dev.Sync(newpos)
+  File "/Users/holtz/git/AlpycaDevice/device/rotatordevice.py", line 322, in Sync
+    raise RuntimeError('Cannot sync while rotator is moving')
+RuntimeError: Cannot sync while rotator is moving
+
+2023-12-17T18:09:50.570 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=203
+2023-12-17T18:09:50.570 INFO 10.0.0.201 <- 138.0
+2023-12-17T18:09:50.573 INFO 10.0.0.201 -> PUT /api/v1/rotator/0/movemechanical
+2023-12-17T18:09:50.573 INFO 10.0.0.201 -> {'Position': '0', 'ClientID': '1', 'ClientTransactionID': '204'}
+2023-12-17T18:09:50.573 ERROR DriverException: Rotator.MoveMechanical failed
+Traceback (most recent call last):
+  File "/Users/holtz/git/AlpycaDevice/device/rotator.py", line 566, in on_put
+    rot_dev.MoveMechanical(newpos)    # async
+  File "/Users/holtz/git/AlpycaDevice/device/rotatordevice.py", line 310, in MoveMechanical
+    raise RuntimeError('Cannot start a move while the rotator is moving')
+RuntimeError: Cannot start a move while the rotator is moving
+
+2023-12-17T18:09:50.579 INFO 10.0.0.201 -> PUT /api/v1/rotator/0/sync
+2023-12-17T18:09:50.579 INFO 10.0.0.201 -> {'Position': '330', 'ClientID': '1', 'ClientTransactionID': '205'}
+2023-12-17T18:09:50.579 ERROR DriverException: Rotator.Sync failed
+Traceback (most recent call last):
+  File "/Users/holtz/git/AlpycaDevice/device/rotator.py", line 616, in on_put
+    rot_dev.Sync(newpos)
+  File "/Users/holtz/git/AlpycaDevice/device/rotatordevice.py", line 322, in Sync
+    raise RuntimeError('Cannot sync while rotator is moving')
+RuntimeError: Cannot sync while rotator is moving
+
+2023-12-17T18:09:50.588 INFO 10.0.0.201 -> GET /api/v1/rotator/0/position?ClientID=1&ClientTransactionID=206
+2023-12-17T18:09:50.588 INFO 10.0.0.201 <- 138.0
+2023-12-17T18:09:50.658 INFO 10.0.0.201 -> GET /api/v1/rotator/0/mechanicalposition?ClientID=1&ClientTransactionID=207
+2023-12-17T18:09:50.658 INFO 10.0.0.201 <- 139.0
+2023-12-17T18:09:50.676 INFO 10.0.0.201 -> PUT /api/v1/rotator/0/sync
+2023-12-17T18:09:50.677 INFO 10.0.0.201 -> {'Position': '139', 'ClientID': '1', 'ClientTransactionID': '208'}
+2023-12-17T18:09:50.677 ERROR DriverException: Rotator.Sync failed
+Traceback (most recent call last):
+  File "/Users/holtz/git/AlpycaDevice/device/rotator.py", line 616, in on_put
+    rot_dev.Sync(newpos)
+  File "/Users/holtz/git/AlpycaDevice/device/rotatordevice.py", line 322, in Sync
+    raise RuntimeError('Cannot sync while rotator is moving')
+RuntimeError: Cannot sync while rotator is moving
+
+2023-12-17T18:09:50.694 INFO 10.0.0.201 -> PUT /api/v1/rotator/0/connected
+2023-12-17T18:09:50.694 INFO 10.0.0.201 -> {'Connected': 'False', 'ClientID': '1', 'ClientTransactionID': '209'}
+2023-12-17T18:09:50.697 ERROR DriverException: Rotator.Connected failed
+Traceback (most recent call last):
+  File "/Users/holtz/git/AlpycaDevice/device/rotator.py", line 187, in on_put
+    rot_dev.connected = conn
+  File "/Users/holtz/git/AlpycaDevice/device/rotatordevice.py", line 267, in connected
+    raise RuntimeError('Cannot disconnect while rotator is moving')
+RuntimeError: Cannot disconnect while rotator is moving
+
