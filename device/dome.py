@@ -85,9 +85,7 @@ class commandstring:
 @before(PreProcessRequest(maxdev))
 class connected:
     def on_get(self, req: Request, resp: Response, devnum: int):
-            # -------------------------------
-            is_conn = ### READ CONN STATE ###
-            # -------------------------------
+        is_conn = dome_dev.connected ##
         resp.text = PropertyResponse(is_conn, req).json
 
     def on_put(self, req: Request, resp: Response, devnum: int):
@@ -135,13 +133,13 @@ class supportedactions:
 class altitude:
 
     def on_get(self, req: Request, resp: Response, devnum: int):
-        if not ##IS DEV CONNECTED##:
+        if not dome_dev.connected : ##
             resp.text = PropertyResponse(None, req,
                             NotConnectedException()).json
             return
         try:
             # ----------------------
-            val = ## GET PROPERTY ##
+            val = dome_dev.altitude  ## GET PROPERTY ##
             # ----------------------
             resp.text = PropertyResponse(val, req).json
         except Exception as ex:
@@ -152,14 +150,12 @@ class altitude:
 class athome:
 
     def on_get(self, req: Request, resp: Response, devnum: int):
-        if not ##IS DEV CONNECTED##:
+        if not dome_dev.connected : ##IS DEV CONNECTED##:
             resp.text = PropertyResponse(None, req,
                             NotConnectedException()).json
             return
         try:
-            # ----------------------
-            val = ## GET PROPERTY ##
-            # ----------------------
+            val = dome_dev.athome() ##
             resp.text = PropertyResponse(val, req).json
         except Exception as ex:
             resp.text = PropertyResponse(None, req,
@@ -169,14 +165,12 @@ class athome:
 class atpark:
 
     def on_get(self, req: Request, resp: Response, devnum: int):
-        if not ##IS DEV CONNECTED##:
+        if not dome_dev.connected : ##IS DEV CONNECTED##:
             resp.text = PropertyResponse(None, req,
                             NotConnectedException()).json
             return
         try:
-            # ----------------------
-            val = ## GET PROPERTY ##
-            # ----------------------
+            val = dome_dev.atpark() ## GET PROPERTY ##
             resp.text = PropertyResponse(val, req).json
         except Exception as ex:
             resp.text = PropertyResponse(None, req,
@@ -186,14 +180,12 @@ class atpark:
 class azimuth:
 
     def on_get(self, req: Request, resp: Response, devnum: int):
-        if not ##IS DEV CONNECTED##:
+        if not dome_dev.connected : ##IS DEV CONNECTED##:
             resp.text = PropertyResponse(None, req,
                             NotConnectedException()).json
             return
         try:
-            # ----------------------
-            val = ## GET PROPERTY ##
-            # ----------------------
+            val = dome_dev.azimuth() ## GET PROPERTY ##
             resp.text = PropertyResponse(val, req).json
         except Exception as ex:
             resp.text = PropertyResponse(None, req,
@@ -203,7 +195,7 @@ class azimuth:
 class canfindhome:
 
     def on_get(self, req: Request, resp: Response, devnum: int):
-        if not ##IS DEV CONNECTED##:
+        if not dome_dev.connected : ##IS DEV CONNECTED##:
             resp.text = PropertyResponse(None, req,
                             NotConnectedException()).json
             return
@@ -220,13 +212,13 @@ class canfindhome:
 class canpark:
 
     def on_get(self, req: Request, resp: Response, devnum: int):
-        if not ##IS DEV CONNECTED##:
+        if not dome_dev.connected : ##IS DEV CONNECTED##:
             resp.text = PropertyResponse(None, req,
                             NotConnectedException()).json
             return
         try:
             # ----------------------
-            val = ## GET PROPERTY ##
+            val = dome_dev.canpark
             # ----------------------
             resp.text = PropertyResponse(val, req).json
         except Exception as ex:
@@ -237,13 +229,13 @@ class canpark:
 class cansetaltitude:
 
     def on_get(self, req: Request, resp: Response, devnum: int):
-        if not ##IS DEV CONNECTED##:
+        if not dome_dev.connected : ##IS DEV CONNECTED##:
             resp.text = PropertyResponse(None, req,
                             NotConnectedException()).json
             return
         try:
             # ----------------------
-            val = ## GET PROPERTY ##
+            val = dome_dev.cansetaltitude
             # ----------------------
             resp.text = PropertyResponse(val, req).json
         except Exception as ex:
@@ -254,13 +246,13 @@ class cansetaltitude:
 class cansetazimuth:
 
     def on_get(self, req: Request, resp: Response, devnum: int):
-        if not ##IS DEV CONNECTED##:
+        if not dome_dev.connected : ##IS DEV CONNECTED##:
             resp.text = PropertyResponse(None, req,
                             NotConnectedException()).json
             return
         try:
             # ----------------------
-            val = ## GET PROPERTY ##
+            val = dome_dev.cansetazimuth
             # ----------------------
             resp.text = PropertyResponse(val, req).json
         except Exception as ex:
@@ -271,13 +263,13 @@ class cansetazimuth:
 class cansetpark:
 
     def on_get(self, req: Request, resp: Response, devnum: int):
-        if not ##IS DEV CONNECTED##:
+        if not dome_dev.connected : ##IS DEV CONNECTED##:
             resp.text = PropertyResponse(None, req,
                             NotConnectedException()).json
             return
         try:
             # ----------------------
-            val = ## GET PROPERTY ##
+            val = dome_dev.cansetpark
             # ----------------------
             resp.text = PropertyResponse(val, req).json
         except Exception as ex:
@@ -288,13 +280,13 @@ class cansetpark:
 class cansetshutter:
 
     def on_get(self, req: Request, resp: Response, devnum: int):
-        if not ##IS DEV CONNECTED##:
+        if not dome_dev.connected : ##IS DEV CONNECTED##:
             resp.text = PropertyResponse(None, req,
                             NotConnectedException()).json
             return
         try:
             # ----------------------
-            val = ## GET PROPERTY ##
+            val = dome_dev.cansetshutter
             # ----------------------
             resp.text = PropertyResponse(val, req).json
         except Exception as ex:
@@ -305,13 +297,13 @@ class cansetshutter:
 class canslave:
 
     def on_get(self, req: Request, resp: Response, devnum: int):
-        if not ##IS DEV CONNECTED##:
+        if not dome_dev.connected : ##IS DEV CONNECTED##:
             resp.text = PropertyResponse(None, req,
                             NotConnectedException()).json
             return
         try:
             # ----------------------
-            val = ## GET PROPERTY ##
+            val = dome_dev.canslave
             # ----------------------
             resp.text = PropertyResponse(val, req).json
         except Exception as ex:
@@ -322,13 +314,13 @@ class canslave:
 class cansyncazimuth:
 
     def on_get(self, req: Request, resp: Response, devnum: int):
-        if not ##IS DEV CONNECTED##:
+        if not dome_dev.connected : ##IS DEV CONNECTED##:
             resp.text = PropertyResponse(None, req,
                             NotConnectedException()).json
             return
         try:
             # ----------------------
-            val = ## GET PROPERTY ##
+            val = dome_dev.cansyncazimuth
             # ----------------------
             resp.text = PropertyResponse(val, req).json
         except Exception as ex:
@@ -339,7 +331,7 @@ class cansyncazimuth:
 class shutterstatus:
 
     def on_get(self, req: Request, resp: Response, devnum: int):
-        if not ##IS DEV CONNECTED##:
+        if not dome_dev.connected : ##IS DEV CONNECTED##:
             resp.text = PropertyResponse(None, req,
                             NotConnectedException()).json
             return
@@ -356,7 +348,7 @@ class shutterstatus:
 class slaved:
 
     def on_get(self, req: Request, resp: Response, devnum: int):
-        if not ##IS DEV CONNECTED##:
+        if not dome_dev.connected : ##IS DEV CONNECTED##:
             resp.text = PropertyResponse(None, req,
                             NotConnectedException()).json
             return
@@ -370,7 +362,7 @@ class slaved:
                             DriverException(0x500, 'Dome.Slaved failed', ex)).json
 
     def on_put(self, req: Request, resp: Response, devnum: int):
-        if not ## IS DEV CONNECTED ##:
+        if not dome_dev.connected : ## IS DEV CONNECTED ##:
             resp.text = PropertyResponse(None, req,
                             NotConnectedException()).json
             return
@@ -390,7 +382,7 @@ class slaved:
 class slewing:
 
     def on_get(self, req: Request, resp: Response, devnum: int):
-        if not ##IS DEV CONNECTED##:
+        if not dome_dev.connected : ##IS DEV CONNECTED##:
             resp.text = PropertyResponse(None, req,
                             NotConnectedException()).json
             return
@@ -407,7 +399,7 @@ class slewing:
 class abortslew:
 
     def on_put(self, req: Request, resp: Response, devnum: int):
-        if not ## IS DEV CONNECTED ##:
+        if not dome_dev.connected : ## IS DEV CONNECTED ##:
             resp.text = PropertyResponse(None, req,
                             NotConnectedException()).json
             return
@@ -424,13 +416,13 @@ class abortslew:
 class closeshutter:
 
     def on_put(self, req: Request, resp: Response, devnum: int):
-        if not ## IS DEV CONNECTED ##:
+        if not dome_dev.connected : ## IS DEV CONNECTED ##:
             resp.text = PropertyResponse(None, req,
                             NotConnectedException()).json
             return
         try:
             # -----------------------------
-            ### DEVICE OPERATION(PARAM) ###
+            dome_dev.close_shutter() ### DEVICE OPERATION(PARAM) ###
             # -----------------------------
             resp.text = MethodResponse(req).json
         except Exception as ex:
@@ -441,13 +433,13 @@ class closeshutter:
 class findhome:
 
     def on_put(self, req: Request, resp: Response, devnum: int):
-        if not ## IS DEV CONNECTED ##:
+        if not dome_dev.connected : ## IS DEV CONNECTED ##:
             resp.text = PropertyResponse(None, req,
                             NotConnectedException()).json
             return
         try:
             # -----------------------------
-            ### DEVICE OPERATION(PARAM) ###
+            dome_dev.home() ### DEVICE OPERATION(PARAM) ###
             # -----------------------------
             resp.text = MethodResponse(req).json
         except Exception as ex:
@@ -458,13 +450,13 @@ class findhome:
 class openshutter:
 
     def on_put(self, req: Request, resp: Response, devnum: int):
-        if not ## IS DEV CONNECTED ##:
+        if not dome_dev.connected : ## IS DEV CONNECTED ##:
             resp.text = PropertyResponse(None, req,
                             NotConnectedException()).json
             return
         try:
             # -----------------------------
-            ### DEVICE OPERATION(PARAM) ###
+            dome_dev.open(shutter() ### DEVICE OPERATION(PARAM) ###
             # -----------------------------
             resp.text = MethodResponse(req).json
         except Exception as ex:
@@ -475,7 +467,7 @@ class openshutter:
 class park:
 
     def on_put(self, req: Request, resp: Response, devnum: int):
-        if not ## IS DEV CONNECTED ##:
+        if not dome_dev.connected : ## IS DEV CONNECTED ##:
             resp.text = PropertyResponse(None, req,
                             NotConnectedException()).json
             return
@@ -492,13 +484,13 @@ class park:
 class setpark:
 
     def on_put(self, req: Request, resp: Response, devnum: int):
-        if not ## IS DEV CONNECTED ##:
+        if not dome_dev.connected : ## IS DEV CONNECTED ##:
             resp.text = PropertyResponse(None, req,
                             NotConnectedException()).json
             return
         try:
             # -----------------------------
-            ### DEVICE OPERATION(PARAM) ###
+            dome_dev.set_park() ### DEVICE OPERATION(PARAM) ###
             # -----------------------------
             resp.text = MethodResponse(req).json
         except Exception as ex:
@@ -509,7 +501,7 @@ class setpark:
 class slewtoaltitude:
 
     def on_put(self, req: Request, resp: Response, devnum: int):
-        if not ## IS DEV CONNECTED ##:
+        if not dome_dev.connected : ## IS DEV CONNECTED ##:
             resp.text = PropertyResponse(None, req,
                             NotConnectedException()).json
             return
@@ -534,7 +526,7 @@ class slewtoaltitude:
 class slewtoazimuth:
 
     def on_put(self, req: Request, resp: Response, devnum: int):
-        if not ## IS DEV CONNECTED ##:
+        if not dome_dev.connected : ## IS DEV CONNECTED ##:
             resp.text = PropertyResponse(None, req,
                             NotConnectedException()).json
             return
@@ -559,7 +551,7 @@ class slewtoazimuth:
 class synctoazimuth:
 
     def on_put(self, req: Request, resp: Response, devnum: int):
-        if not ## IS DEV CONNECTED ##:
+        if not dome_dev.connected : ## IS DEV CONNECTED ##:
             resp.text = PropertyResponse(None, req,
                             NotConnectedException()).json
             return

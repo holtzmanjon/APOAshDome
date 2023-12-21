@@ -217,7 +217,7 @@ def main():
     # Share this logger throughout
     log.logger = logger
     exceptions.logger = logger
-    #rotator.start_rot_device(logger)
+    rotator.start_dome_device(logger)
     discovery.logger = logger
     set_shr_logger(logger)
 
