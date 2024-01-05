@@ -2,7 +2,8 @@ title = "Alpaca Sample Driver (Rotator)"
 
 [network]
 ip_address = ''             # Any address
-port = 5555
+#port = 5555
+port = 32227
 
 [server]
 location = 'Anywhere on Earth'  # Anything you want here

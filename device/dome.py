@@ -45,7 +45,7 @@ class DomeMetadata:
     DeviceID = '4d8c2be6-219f-40b9-bf3f-d228aa1567e9' # https://guidgenerator.com/online-guid-generator.aspx
     Info = 'Alpaca Sample Device\nImplements IDome\nASCOM Initiative'
     MaxDeviceNumber = maxdev
-    InterfaceVersion = "APOAshDome001"        # IDomeVxxx
+    InterfaceVersion = 2        # IDomeVxxx
 
 # --------------------
 # DOME ()
@@ -55,7 +55,7 @@ dome_dev = None
 def start_dome_device(logger: logger):
     logger = logger
     global dome_dev
-    dome_dev = APOAshDome(logger)
+    dome_dev = Dome(logger)
 
 
 # --------------------
@@ -85,7 +85,7 @@ class commandstring:
 @before(PreProcessRequest(maxdev))
 class connected:
     def on_get(self, req: Request, resp: Response, devnum: int):
-        is_conn = dome_dev.connected ##
+        is_conn = dome_dev.connected ## GET PROPERTY ##
         resp.text = PropertyResponse(is_conn, req).json
 
     def on_put(self, req: Request, resp: Response, devnum: int):
@@ -155,7 +155,7 @@ class athome:
                             NotConnectedException()).json
             return
         try:
-            val = dome_dev.athome() ##
+            val = dome_dev.athome() ## GET PROPERTY ##
             resp.text = PropertyResponse(val, req).json
         except Exception as ex:
             resp.text = PropertyResponse(None, req,
@@ -185,7 +185,7 @@ class azimuth:
                             NotConnectedException()).json
             return
         try:
-            val = dome_dev.azimuth() ## GET PROPERTY ##
+            val = dome_dev.azimuth  ## GET PROPERTY ##
             resp.text = PropertyResponse(val, req).json
         except Exception as ex:
             resp.text = PropertyResponse(None, req,
@@ -201,7 +201,7 @@ class canfindhome:
             return
         try:
             # ----------------------
-            val = ## GET PROPERTY ##
+            val = dome_dev.canfindhome  ## GET PROPERTY ##
             # ----------------------
             resp.text = PropertyResponse(val, req).json
         except Exception as ex:
@@ -218,7 +218,7 @@ class canpark:
             return
         try:
             # ----------------------
-            val = dome_dev.canpark
+            val = dome_dev.canpark ## GET PROPERTY ##
             # ----------------------
             resp.text = PropertyResponse(val, req).json
         except Exception as ex:
@@ -235,7 +235,7 @@ class cansetaltitude:
             return
         try:
             # ----------------------
-            val = dome_dev.cansetaltitude
+            val = dome_dev.cansetaltitude  ## GET PROPERTY ##
             # ----------------------
             resp.text = PropertyResponse(val, req).json
         except Exception as ex:
@@ -252,7 +252,7 @@ class cansetazimuth:
             return
         try:
             # ----------------------
-            val = dome_dev.cansetazimuth
+            val = dome_dev.cansetazimuth  ## GET PROPERTY ##  
             # ----------------------
             resp.text = PropertyResponse(val, req).json
         except Exception as ex:
@@ -269,7 +269,7 @@ class cansetpark:
             return
         try:
             # ----------------------
-            val = dome_dev.cansetpark
+            val = dome_dev.cansetpark   ## GET PROPERTY ##k
             # ----------------------
             resp.text = PropertyResponse(val, req).json
         except Exception as ex:
@@ -286,7 +286,7 @@ class cansetshutter:
             return
         try:
             # ----------------------
-            val = dome_dev.cansetshutter
+            val = dome_dev.cansetshutter   ## GET PROPERTY ##r
             # ----------------------
             resp.text = PropertyResponse(val, req).json
         except Exception as ex:
@@ -303,7 +303,7 @@ class canslave:
             return
         try:
             # ----------------------
-            val = dome_dev.canslave
+            val = dome_dev.canslave    ## GET PROPERTY ##e
             # ----------------------
             resp.text = PropertyResponse(val, req).json
         except Exception as ex:
@@ -320,7 +320,7 @@ class cansyncazimuth:
             return
         try:
             # ----------------------
-            val = dome_dev.cansyncazimuth
+            val = dome_dev.cansyncazimuth    ## GET PROPERTY ##h
             # ----------------------
             resp.text = PropertyResponse(val, req).json
         except Exception as ex:
@@ -337,7 +337,7 @@ class shutterstatus:
             return
         try:
             # ----------------------
-            val = ## GET PROPERTY ##
+            val = dome_dev.shutterstatus   ## GET PROPERTY ##
             # ----------------------
             resp.text = PropertyResponse(val, req).json
         except Exception as ex:
@@ -354,7 +354,7 @@ class slaved:
             return
         try:
             # ----------------------
-            val = ## GET PROPERTY ##
+            val = dome_dev.slaved  ## GET PROPERTY ##
             # ----------------------
             resp.text = PropertyResponse(val, req).json
         except Exception as ex:
@@ -388,7 +388,7 @@ class slewing:
             return
         try:
             # ----------------------
-            val = ## GET PROPERTY ##
+            val = dome_dev.slewing  ## GET PROPERTY ##
             # ----------------------
             resp.text = PropertyResponse(val, req).json
         except Exception as ex:
@@ -405,7 +405,7 @@ class abortslew:
             return
         try:
             # -----------------------------
-            ### DEVICE OPERATION(PARAM) ###
+            dome_dev.abort_slew() ### DEVICE OPERATION(PARAM) ###
             # -----------------------------
             resp.text = MethodResponse(req).json
         except Exception as ex:
@@ -456,7 +456,7 @@ class openshutter:
             return
         try:
             # -----------------------------
-            dome_dev.open(shutter() ### DEVICE OPERATION(PARAM) ###
+            dome_dev.open_shutter() ### DEVICE OPERATION(PARAM) ###
             # -----------------------------
             resp.text = MethodResponse(req).json
         except Exception as ex:
@@ -515,7 +515,7 @@ class slewtoaltitude:
         ### RANGE CHECK AS NEEDED ###         # Raise Alpaca InvalidValueException with details!
         try:
             # -----------------------------
-            ### DEVICE OPERATION(PARAM) ###
+            dome_dev.slewtoaltitude(altitude) ### DEVICE OPERATION(PARAM) ###
             # -----------------------------
             resp.text = MethodResponse(req).json
         except Exception as ex:
@@ -540,7 +540,7 @@ class slewtoazimuth:
         ### RANGE CHECK AS NEEDED ###       # Raise Alpaca InvalidValueException with details!
         try:
             # -----------------------------
-            ### DEVICE OPERATION(PARAM) ###
+            dome_dev.slewtoazimuth(azimuth)  ### DEVICE OPERATION(PARAM) ###
             # -----------------------------
             resp.text = MethodResponse(req).json
         except Exception as ex:
