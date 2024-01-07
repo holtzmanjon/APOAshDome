@@ -369,9 +369,14 @@ class slaved:
         slavedstr = get_request_field('Slaved', req)      # Raises 400 bad request if missing
         slaved = to_bool(slavedstr)                       # Same here
 
+        if not dome_dev.canslave :
+            resp.text = PropertyResponse(None, req,
+                            InvalidOperationException()).json
+            return
+
         try:
             # -----------------------------
-            ### DEVICE OPERATION(PARAM) ###
+            dome_dev.slave(slaved) ### DEVICE OPERATION(PARAM) ###
             # -----------------------------
             resp.text = MethodResponse(req).json
         except Exception as ex:
@@ -473,7 +478,7 @@ class park:
             return
         try:
             # -----------------------------
-            ### DEVICE OPERATION(PARAM) ###
+            dome_dev.park() ### DEVICE OPERATION(PARAM) ###
             # -----------------------------
             resp.text = MethodResponse(req).json
         except Exception as ex:
@@ -512,6 +517,10 @@ class slewtoaltitude:
             resp.text = MethodResponse(req,
                             InvalidValueException(f'Altitude " + altitudestr + " not a valid number.')).json
             return
+        if not dome_dev.cansetaltitude :
+            resp.text = PropertyResponse(None, req,
+                            InvalidOperationException()).json
+            return
         ### RANGE CHECK AS NEEDED ###         # Raise Alpaca InvalidValueException with details!
         try:
             # -----------------------------
@@ -538,6 +547,10 @@ class slewtoazimuth:
                             InvalidValueException(f'Azimuth " + azimuthstr + " not a valid number.')).json
             return
         ### RANGE CHECK AS NEEDED ###       # Raise Alpaca InvalidValueException with details!
+        if azimuth < 0 or azimuth > 360 :
+            resp.text = PropertyResponse(None, req,
+                            InvalidValueException('azimuth must be between 0 and 360')).json
+            return 
         try:
             # -----------------------------
             dome_dev.slewtoazimuth(azimuth)  ### DEVICE OPERATION(PARAM) ###
@@ -561,6 +574,10 @@ class synctoazimuth:
         except:
             resp.text = MethodResponse(req,
                             InvalidValueException(f'Azimuth " + azimuthstr + " not a valid number.')).json
+            return
+        if not dome_dev.cansyncazimuth :
+            resp.text = PropertyResponse(None, req,
+                            InvalidOperationException()).json
             return
         ### RANGE CHECK AS NEEDED ###       # Raise Alpaca InvalidValueException with details!
         try:
