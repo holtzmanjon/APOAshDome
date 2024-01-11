@@ -15,19 +15,21 @@ is_dome_home bit
 
 from tristate import Tristate
 import time
-from exceptions import *
 from threading import Timer, Lock, Thread
 from logging import Logger
 import pigpio
+import piplates.RELAYplate as RELAY
 
-UPPER_DIRECTION = 1
-UPPER_POWER = 1
+DOME_POWER = 1      #relay 207  pin 47
+UPPER_POWER = 2     #relay 205  pin 48
+DOME_DIRECTION = 3  #relay 208  pin 5
+UPPER_DIRECTION = 4 #relay 206  pin 4
+WATCHDOG_RESET = 5  #relay 201  pin 50
+
 LOWER_DIRECTION = 1
 LOWER_POWER = 1
 HOME = 1
 
-DOME_POWER = 1
-DOME_DIRECTION = 1
 
 UPPER_TIME = 6
 LOWER_TIME = 5
@@ -114,6 +116,8 @@ class Dome :
     def open_upper(self) :
         """ Open upper shutter asynchronously
         """
+        set_bit(UPPER_POWER,0)
+        sleep(1)
         if self.verbose: print('starting shutter open')
         set_bit(UPPER_DIRECTION,1)
         set_bit(UPPER_POWER,1)
@@ -124,7 +128,10 @@ class Dome :
     def close_upper(self) :
         """ Close upper shutter
         """
-        set_bit(UPPER_DIRECTION,1)
+        set_bit(UPPER_POWER,0)
+        sleep(1)
+        if self.verbose: print('starting shutter close')
+        set_bit(UPPER_DIRECTION,0)
         set_bit(UPPER_POWER,1)
         self.shutterstatus = ShutterState.shutterClosing.value
         t=Timer(UPPER_TIME,self.set_upper_closed)
@@ -146,6 +153,8 @@ class Dome :
         """ Open lower shutter asynchronously
         """
         if is_upper_open == True :
+            set_bit(LOWER_POWER,0)
+            sleep(1)
             set_bit(LOWER_DIRECTION,1)
             set_bit(LOWER_POWER,1)
             t=Timer(LOWER_TIME,self.set_upper_open)
@@ -157,6 +166,8 @@ class Dome :
         """ Close lower shutter
         """
         if is_upper_open == True :
+            set_bit(LOWER_POWER,0)
+            sleep(1)
             set_bit(LOWER_DIRECTION,1)
             set_bit(LOWER_POWER,1)
             t=Timer(LOWER_TIME,self.set_upper_open)
@@ -223,6 +234,8 @@ class Dome :
     def rotate(self,cw=True) :
         """ Start dome rotating
         """
+        set_bit(DOME_POWER,0)
+        sleep(1)
         if self.verbose : print('starting dome rotation ', cw)
         if cw :
             set_bit(DOME_DIRECTION,1)
@@ -264,6 +277,10 @@ class Dome :
         raise RuntimeError('slaving not available') 
 
 def set_bit(bit,value) :
+    if value == 1 :
+        RELAY.relayON(0,bit)
+    else :
+        RELAY.relayOFF(0,bit)
     return
 
 def get_bit(bit,fake=None) :
