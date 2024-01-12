@@ -8,6 +8,7 @@ from threading import Timer, Lock, Thread
 from logging import Logger
 import piplates.RELAYplate as RELAY
 import Encoder
+import timer
 
 DOME_POWER = 1      #relay 207  pin 47
 UPPER_POWER = 2     #relay 205  pin 48
@@ -72,14 +73,20 @@ class Dome :
             t=Thread(target=self.sendhome)
             t.start()
 
-    def sendhome(self) :
+    def sendhome(self,timout=180) :
         """ Go to home
         """
         if self.verbose : print('sending home')
         self.rotate(1)
-        while not self.athome() :
+        t=timer.Timer()
+        t.start()
+        while not self.athome() and t.elapsed()<timeout :
             continue
-        self.azimuth = HOME_POSITION
+        if t.elapsed < timeout :
+            self.azimuth = HOME_POSITION
+        else :
+            print('Home timer expired before finding home !)
+        t.stop()
 
     def athome(self) :
         """ Check if at home position
@@ -242,7 +249,7 @@ class Dome :
         return self.azimuth
 
         
-    def slewtoazimuth(self,azimuth) :
+    def slewtoazimuth(self,azimuth,timeout=180) :
         """ Slew to requested azimuth
         """
         current_az = self.azimuth
@@ -255,10 +262,14 @@ class Dome :
             self.rotate(1)
         else :
             self.rotate(0)
-        while abs(diff(azimuth,self.get_azimuth())) > 1 : 
+        t=timer.Timer()
+        t.start()
+        while abs(diff(azimuth,self.get_azimuth())) > 1 and t.elapsed()<timeout : 
             self.azimuth = azimuth    # remove when get_azimuth works!!
             continue
         self.stop()
+        if t.elapsed > timeout :
+            print('Rotate timer expired before reaching desired azimuth !)
         print('self.azimuth', self.azimuth)
 
     def slewtoaltitude(self, altitude) :
