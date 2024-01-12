@@ -1,24 +1,13 @@
 """
 Low level inteface to APO Ash Dome
-
-bl4 - shutter power
-bl5,bh5 - set shutter direction 
-
-bl2 - lower shutter power
-bl3,bh3 - lower shutter direction
-
-bl6 - rotate power
-bl7,bh7 - set direction 
-
-is_dome_home bit
 """
 
 from tristate import Tristate
 import time
 from threading import Timer, Lock, Thread
 from logging import Logger
-import pigpio
 import piplates.RELAYplate as RELAY
+import Encoder
 
 DOME_POWER = 1      #relay 207  pin 47
 UPPER_POWER = 2     #relay 205  pin 48
@@ -26,15 +15,17 @@ DOME_DIRECTION = 3  #relay 208  pin 5
 UPPER_DIRECTION = 4 #relay 206  pin 4
 WATCHDOG_RESET = 5  #relay 201  pin 50
 
-LOWER_DIRECTION = 1
-LOWER_POWER = 1
+LOWER_DIRECTION = 6
+LOWER_POWER = 7
 HOME = 1
-
 
 UPPER_TIME = 6
 LOWER_TIME = 5
 PARK_POSITION = 45
 HOME_POSITION = 45
+
+ENCODER_A = 6
+ENCODER_B = 13
 
 from enum import Enum
 class ShutterState(Enum) :
@@ -68,6 +59,11 @@ class Dome :
         self.slewing = False
         self.park_position = PARK_POSITION
         self.verbose = True
+        self.enc = Encoder.Encoder(ENCODER_A,ENCODER_B)
+
+    def reset_watchdog(self) :
+        set_bit(WATCHDOG_RESET,1)
+        set_bit(WATCHDOG_RESET,0)
 
     def home(self) :
         """ Send dome to home asynchronously
@@ -117,7 +113,6 @@ class Dome :
         """ Open upper shutter asynchronously
         """
         set_bit(UPPER_POWER,0)
-        sleep(1)
         if self.verbose: print('starting shutter open')
         set_bit(UPPER_DIRECTION,1)
         set_bit(UPPER_POWER,1)
@@ -129,7 +124,6 @@ class Dome :
         """ Close upper shutter
         """
         set_bit(UPPER_POWER,0)
-        sleep(1)
         if self.verbose: print('starting shutter close')
         set_bit(UPPER_DIRECTION,0)
         set_bit(UPPER_POWER,1)
@@ -154,7 +148,6 @@ class Dome :
         """
         if is_upper_open == True :
             set_bit(LOWER_POWER,0)
-            sleep(1)
             set_bit(LOWER_DIRECTION,1)
             set_bit(LOWER_POWER,1)
             t=Timer(LOWER_TIME,self.set_upper_open)
@@ -167,7 +160,6 @@ class Dome :
         """
         if is_upper_open == True :
             set_bit(LOWER_POWER,0)
-            sleep(1)
             set_bit(LOWER_DIRECTION,1)
             set_bit(LOWER_POWER,1)
             t=Timer(LOWER_TIME,self.set_upper_open)
@@ -180,7 +172,7 @@ class Dome :
         """
         self.open_upper() 
         if lower :
-            sleep(10)
+            time.sleep(10)
             self.open_lower() 
 
     def close_shutter(self,lower=False) :
@@ -188,7 +180,7 @@ class Dome :
         """
         if lower :
             self.close_lower() 
-            sleep(10)
+            time.sleep(10)
         self.close_upper() 
 
     def atpark(self) :
@@ -234,8 +226,7 @@ class Dome :
     def rotate(self,cw=True) :
         """ Start dome rotating
         """
-        set_bit(DOME_POWER,0)
-        sleep(1)
+        self.stop()
         if self.verbose : print('starting dome rotation ', cw)
         if cw :
             set_bit(DOME_DIRECTION,1)
@@ -247,7 +238,7 @@ class Dome :
     def get_azimuth(self) :
         """ Get current dome azimuth
         """
-        # self.azimuth = read_encoder()
+        self.azimuth = self.enc.read()
         return self.azimuth
 
         
@@ -281,6 +272,7 @@ def set_bit(bit,value) :
         RELAY.relayON(0,bit)
     else :
         RELAY.relayOFF(0,bit)
+    time.sleep(0.2)
     return
 
 def get_bit(bit,fake=None) :
