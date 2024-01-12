@@ -86,7 +86,7 @@ class Dome :
         if t.elapsed < timeout :
             self.azimuth = HOME_POSITION
         else :
-            print('Home timer expired before finding home !)
+            print('Home timer expired before finding home !')
         t.stop()
 
     def athome(self) :
@@ -270,7 +270,7 @@ class Dome :
             continue
         self.stop()
         if t.elapsed > timeout :
-            print('Rotate timer expired before reaching desired azimuth !)
+            print('Rotate timer expired before reaching desired azimuth !')
         print('self.azimuth', self.azimuth)
         t.stop()
 
