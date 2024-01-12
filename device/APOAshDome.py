@@ -21,8 +21,9 @@ HOME = 1
 
 UPPER_TIME = 6
 LOWER_TIME = 5
-PARK_POSITION = 45
-HOME_POSITION = 45
+PARK_POSITION = 60
+HOME_POSITION = 89
+steps_per_degree = 725
 
 ENCODER_A = 6
 ENCODER_B = 13
@@ -238,7 +239,7 @@ class Dome :
     def get_azimuth(self) :
         """ Get current dome azimuth
         """
-        self.azimuth = self.enc.read()
+        self.azimuth = self.enc.read()/steps_per_degree + HOME_POSITION
         return self.azimuth
 
         
@@ -256,7 +257,7 @@ class Dome :
         else :
             self.rotate(0)
         while abs(diff(azimuth,self.get_azimuth())) > 1 : 
-            self.azimuth = azimuth    # remove when get_azimuth works!!
+            print(self.azimuth)
             continue
         self.stop()
         print('self.azimuth', self.azimuth)
