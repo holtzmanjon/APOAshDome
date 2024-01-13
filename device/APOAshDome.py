@@ -10,24 +10,31 @@ import piplates.RELAYplate as RELAY
 import Encoder
 import timer
 
+# RELAYPlates relay numbers for different operations
 DOME_POWER = 1      #relay 207  pin 47
 UPPER_POWER = 2     #relay 205  pin 48
 DOME_DIRECTION = 3  #relay 208  pin 5
 UPPER_DIRECTION = 4 #relay 206  pin 4
 WATCHDOG_RESET = 5  #relay 201  pin 50
-
 LOWER_DIRECTION = 6
 LOWER_POWER = 7
+
+# GPIO bit for home sensor
 HOME = 1
 
+# time before shutters are reigster open or closed
 UPPER_TIME = 6
 LOWER_TIME = 5
+
+# Park and home positions
 PARK_POSITION = 60
 HOME_POSITION = 89
-steps_per_degree = 725
 
+# GPIO pins for azimuth encoder
 ENCODER_A = 6
 ENCODER_B = 13
+# scale for azimuth encoder
+steps_per_degree = 725
 
 from enum import Enum
 class ShutterState(Enum) :
@@ -62,10 +69,21 @@ class Dome :
         self.park_position = PARK_POSITION
         self.verbose = True
         self.enc = Encoder.Encoder(ENCODER_A,ENCODER_B)
+        self.start_watchdog()
 
-    def reset_watchdog(self) :
-        set_bit(WATCHDOG_RESET,1)
-        set_bit(WATCHDOG_RESET,0)
+    def reset_watchdog(self,timeout=180) :
+        """ Reset watchdog periodically
+        """
+        while True :
+            set_relay(WATCHDOG_RESET,1)
+            set_relay(WATCHDOG_RESET,0)
+            time.sleep(timeout)
+
+    def start_watchdog(self) :
+        """ Start thread to periodically reset watchdog
+        """
+        t=Thread(target=self.reset_watchdog())
+        t.start()
 
     def home(self) :
         """ Send dome to home asynchronously
@@ -95,7 +113,7 @@ class Dome :
         #if get_bit(HOME) :
         if self.azimuth == HOME_POSITION :   # change when home sensing is implemented
             self.azimuth = HOME_POSITION
-            set_bit(DOME_POWER,0)
+            set_relay(DOME_POWER,0)
             self.slewing = False
             return True
         else :
@@ -107,7 +125,8 @@ class Dome :
         if self.verbose: print('setting upper shutter open')
         self.is_upper_open = True
         self.shutterstatus = ShutterState.shutterOpen.value
-        set_bit(UPPER_POWER,0)
+        set_relay(UPPER_POWER,0)
+        set_relay(UPPER_DIRECTION,0)
 
     def set_upper_closed(self) :
         """ Set upper shutter status to closed and turn off shutter power 
@@ -115,15 +134,15 @@ class Dome :
         if self.verbose: print('setting upper shutter closed')
         self.is_upper_open = False
         self.shutterstatus = ShutterState.shutterClosed.value
-        set_bit(UPPER_POWER,0)
+        set_relay(UPPER_POWER,0)
 
     def open_upper(self) :
         """ Open upper shutter asynchronously
         """
-        set_bit(UPPER_POWER,0)
+        set_relay(UPPER_POWER,0)
         if self.verbose: print('starting shutter open')
-        set_bit(UPPER_DIRECTION,1)
-        set_bit(UPPER_POWER,1)
+        set_relay(UPPER_DIRECTION,1)
+        set_relay(UPPER_POWER,1)
         self.shutterstatus = ShutterState.shutterOpening.value
         t=Timer(UPPER_TIME,self.set_upper_open)
         t.start()
@@ -131,10 +150,10 @@ class Dome :
     def close_upper(self) :
         """ Close upper shutter
         """
-        set_bit(UPPER_POWER,0)
+        set_relay(UPPER_POWER,0)
         if self.verbose: print('starting shutter close')
-        set_bit(UPPER_DIRECTION,0)
-        set_bit(UPPER_POWER,1)
+        set_relay(UPPER_DIRECTION,0)
+        set_relay(UPPER_POWER,1)
         self.shutterstatus = ShutterState.shutterClosing.value
         t=Timer(UPPER_TIME,self.set_upper_closed)
         t.start()
@@ -143,21 +162,22 @@ class Dome :
         """ Set lower shutter status to open and turn off shutter power 
         """
         self.is_lower_open = True
-        set_bit(LOWER_POWER,0)
+        set_relay(LOWER_POWER,0)
 
     def set_lower_closed(self) :
         """ Set lower shutter status to closed and turn off shutter power 
         """
         self.is_lower_open = True
-        set_bit(LOWER_POWER,0)
+        set_relay(LOWER_POWER,0)
+        set_relay(LOWER_DIRECTION,0)
 
     def open_lower(self) :
         """ Open lower shutter asynchronously
         """
         if is_upper_open == True :
-            set_bit(LOWER_POWER,0)
-            set_bit(LOWER_DIRECTION,1)
-            set_bit(LOWER_POWER,1)
+            set_relay(LOWER_POWER,0)
+            set_relay(LOWER_DIRECTION,1)
+            set_relay(LOWER_POWER,1)
             t=Timer(LOWER_TIME,self.set_upper_open)
             t.start()
         else :
@@ -167,16 +187,16 @@ class Dome :
         """ Close lower shutter
         """
         if is_upper_open == True :
-            set_bit(LOWER_POWER,0)
-            set_bit(LOWER_DIRECTION,1)
-            set_bit(LOWER_POWER,1)
+            set_relay(LOWER_POWER,0)
+            set_relay(LOWER_DIRECTION,1)
+            set_relay(LOWER_POWER,1)
             t=Timer(LOWER_TIME,self.set_upper_open)
             t.start()
         else :
             raise RuntimeError('cannot close lower shutter when upper shutter is not open')
 
     def open_shutter(self,lower=False) :
-        """ Open the dome shutter(s)
+        """ Open the dome shutter(s). If lower, wait 10s after starting upper to start lower
         """
         self.open_upper() 
         if lower :
@@ -184,11 +204,11 @@ class Dome :
             self.open_lower() 
 
     def close_shutter(self,lower=False) :
-        """ Close the dome shutter(s)
+        """ Close the dome shutter(s). If lower, wait 30s after starting lower to start upper
         """
         if lower :
             self.close_lower() 
-            time.sleep(10)
+            time.sleep(30)
         self.close_upper() 
 
     def atpark(self) :
@@ -228,7 +248,7 @@ class Dome :
         """ Stop dome rotation
         """
         if self.verbose : print('stopping dome rotation ')
-        set_bit(DOME_POWER,0)
+        set_relay(DOME_POWER,0)
         self.slewing = False
 
     def rotate(self,cw=True) :
@@ -237,10 +257,10 @@ class Dome :
         self.stop()
         if self.verbose : print('starting dome rotation ', cw)
         if cw :
-            set_bit(DOME_DIRECTION,1)
+            set_relay(DOME_DIRECTION,1)
         else :
-            set_bit(DOME_DIRECTION,0)
-        set_bit(DOME_POWER,1)
+            set_relay(DOME_DIRECTION,0)
+        set_relay(DOME_POWER,1)
         self.slewing = True
 
     def get_azimuth(self) :
@@ -249,9 +269,14 @@ class Dome :
         self.azimuth = self.enc.read()/steps_per_degree + HOME_POSITION
         return self.azimuth
 
-        
-    def slewtoazimuth(self,azimuth,timeout=180) :
-        """ Slew to requested azimuth
+    def slewtoazimith(self,azimuth) :
+        """ Start slew to requested azimuth
+        """
+        t=Thread(target=self.gotoazimuth())
+        t.start()
+
+    def gotoazimuth(self,azimuth,timeout=180) :
+        """ slew to requested azimuth
         """
         current_az = self.azimuth
 
@@ -280,7 +305,11 @@ class Dome :
     def slave(self,val) :
         raise RuntimeError('slaving not available') 
 
-def set_bit(bit,value) :
+def set_relay(bit,value) :
+    """ Utility routine to turn RELAYplates relays on (1) or off
+
+        Always sleep 200 ms after a call to give system time to respond before subsequent call
+    """
     if value == 1 :
         RELAY.relayON(0,bit)
     else :
