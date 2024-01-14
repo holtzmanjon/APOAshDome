@@ -82,7 +82,7 @@ class Dome :
     def start_watchdog(self) :
         """ Start thread to periodically reset watchdog
         """
-        t=Thread(target=self.reset_watchdog())
+        t=Thread(target=self.reset_watchdog)
         t.start()
 
     def home(self) :
@@ -101,7 +101,7 @@ class Dome :
         t.start()
         while not self.athome() and t.elapsed()<timeout :
             continue
-        if t.elapsed < timeout :
+        if t.elapsed() < timeout :
             self.azimuth = HOME_POSITION
         else :
             print('Home timer expired before finding home !')
@@ -269,10 +269,10 @@ class Dome :
         self.azimuth = self.enc.read()/steps_per_degree + HOME_POSITION
         return self.azimuth
 
-    def slewtoazimith(self,azimuth) :
+    def slewtoazimuth(self,azimuth) :
         """ Start slew to requested azimuth
         """
-        t=Thread(target=self.gotoazimuth())
+        t=Thread(target=lambda : self.gotoazimuth(azimuth))
         t.start()
 
     def gotoazimuth(self,azimuth,timeout=180) :
@@ -294,7 +294,7 @@ class Dome :
             print(self.azimuth)
             continue
         self.stop()
-        if t.elapsed > timeout :
+        if t.elapsed() > timeout :
             print('Rotate timer expired before reaching desired azimuth !')
         print('self.azimuth', self.azimuth)
         t.stop()
