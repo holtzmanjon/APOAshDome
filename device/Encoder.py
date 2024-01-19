@@ -3,8 +3,8 @@ Encoder library for Raspberry Pi for measuring quadrature encoded signals.
 created by Mivallion <mivallion@gmail.com>
 Version 1.0 - 01 april 2020 - inital release
 """
-
 import RPi.GPIO as GPIO
+import pigpio
 
 class Encoder(object):
     """
@@ -15,21 +15,27 @@ class Encoder(object):
     (https://github.com/PaulStoffregen/Encoder) 
     """
     def __init__(self, A, B):
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setup(A, GPIO.IN)
-        GPIO.setup(B, GPIO.IN)
         self.A = A
         self.B = B
         self.pos = 0
         self.state = 0
-        if GPIO.input(A):
-            self.state |= 1
-        if GPIO.input(B):
-            self.state |= 2
-        GPIO.remove_event_detect(A)
-        GPIO.remove_event_detect(B)
-        GPIO.add_event_detect(A, GPIO.BOTH, callback=self.__update)
-        GPIO.add_event_detect(B, GPIO.BOTH, callback=self.__update)
+        #GPIO.setmode(GPIO.BCM)
+        #GPIO.setup(A, GPIO.IN)
+        #GPIO.setup(B, GPIO.IN)
+        #if GPIO.input(A):
+        #    self.state |= 1
+        #if GPIO.input(B):
+        #    self.state |= 2
+        #GPIO.remove_event_detect(A)
+        #GPIO.remove_event_detect(B)
+        #GPIO.add_event_detect(A, GPIO.BOTH, callback=self.__update)
+        #GPIO.add_event_detect(B, GPIO.BOTH, callback=self.__update)
+ 
+        self.pi=pigpio.pi()
+        self.pi.set_mode( A, pigpio.INPUT) 
+        self.pi.set_mode( B, pigpio.INPUT) 
+        cb1 = self.pi.callback(A, pigpio.EITHER_EDGE, self.__update)
+        cb2 = self.pi.callback(B, pigpio.EITHER_EDGE, self.__update)
 
     """
     update() calling every time when value on A or B pins changes.
@@ -38,10 +44,14 @@ class Encoder(object):
     """
     def __update(self, channel):
         state = self.state & 3
-        if GPIO.input(self.A):
+        if self.pi.read(self.A):
             state |= 4
-        if GPIO.input(self.B):
+        if self.pi.read(self.B):
             state |= 8
+        #if GPIO.input(self.A):
+        #    state |= 4
+        #if GPIO.input(self.B):
+        #    state |= 8
 
         self.state = state >> 2
 
