@@ -9,6 +9,7 @@ from logging import Logger
 import piplates.RELAYplate as RELAY
 import Encoder
 import timer
+import RPi.GPIO as GPIO
 
 # RELAYPlates relay numbers for different operations
 DOME_POWER = 1      #relay 207  pin 47
@@ -20,7 +21,7 @@ LOWER_DIRECTION = 6
 LOWER_POWER = 7
 
 # GPIO bit for home sensor
-HOME = 1
+HOME = 26
 
 # time before shutters are reigster open or closed
 UPPER_TIME = 6
@@ -28,13 +29,13 @@ LOWER_TIME = 5
 
 # Park and home positions
 PARK_POSITION = 60
-HOME_POSITION = 89
+HOME_POSITION = 80
 
 # GPIO pins for azimuth encoder
-ENCODER_A = 6
-ENCODER_B = 13
+ENCODER_A = 13
+ENCODER_B = 6
 # scale for azimuth encoder
-steps_per_degree = 725
+steps_per_degree = 725*.86
 
 from enum import Enum
 class ShutterState(Enum) :
@@ -55,7 +56,7 @@ class Dome :
         self.is_upper_closed = Tristate()
         self.is_lower_open = Tristate()
         self.is_lower_closed = Tristate()
-        self.cansetaltitude = False
+        self.cansetaltitude = True
         self.cansetazimuth = True
         self.cansetpark = True
         self.cansetshutter = True
@@ -69,6 +70,7 @@ class Dome :
         self.park_position = PARK_POSITION
         self.verbose = True
         self.enc = Encoder.Encoder(ENCODER_A,ENCODER_B)
+        GPIO.setup(HOME, GPIO.IN)
         self.start_watchdog()
 
     def reset_watchdog(self,timeout=180) :
@@ -92,7 +94,7 @@ class Dome :
             t=Thread(target=self.sendhome)
             t.start()
 
-    def sendhome(self,timout=180) :
+    def sendhome(self,timeout=180) :
         """ Go to home
         """
         if self.verbose : print('sending home')
@@ -100,6 +102,7 @@ class Dome :
         t=timer.Timer()
         t.start()
         while not self.athome() and t.elapsed()<timeout :
+            time.sleep(0.1)
             continue
         if t.elapsed() < timeout :
             self.azimuth = HOME_POSITION
@@ -110,11 +113,13 @@ class Dome :
     def athome(self) :
         """ Check if at home position
         """
-        #if get_bit(HOME) :
-        if self.azimuth == HOME_POSITION :   # change when home sensing is implemented
+        print(GPIO.input(HOME))
+        if GPIO.input(HOME) :
+            self.enc.pos = 0
             self.azimuth = HOME_POSITION
             set_relay(DOME_POWER,0)
             self.slewing = False
+            print('hit home')
             return True
         else :
             return False
@@ -257,9 +262,9 @@ class Dome :
         self.stop()
         if self.verbose : print('starting dome rotation ', cw)
         if cw :
-            set_relay(DOME_DIRECTION,1)
-        else :
             set_relay(DOME_DIRECTION,0)
+        else :
+            set_relay(DOME_DIRECTION,1)
         set_relay(DOME_POWER,1)
         self.slewing = True
 
@@ -267,6 +272,7 @@ class Dome :
         """ Get current dome azimuth
         """
         self.azimuth = self.enc.read()/steps_per_degree + HOME_POSITION
+        self.azimuth %= 360
         return self.azimuth
 
     def slewtoazimuth(self,azimuth) :
@@ -292,6 +298,7 @@ class Dome :
         t.start()
         while abs(diff(azimuth,self.get_azimuth())) > 1 and t.elapsed()<timeout : 
             print(self.azimuth)
+            time.sleep(1)
             continue
         self.stop()
         if t.elapsed() > timeout :
@@ -300,7 +307,8 @@ class Dome :
         t.stop()
 
     def slewtoaltitude(self, altitude) :
-        raise RuntimeError('altitude slew not implemented')
+        return 
+        #raise RuntimeError('altitude slew not implemented')
         
     def slave(self,val) :
         raise RuntimeError('slaving not available') 
