@@ -35,7 +35,7 @@ HOME_POSITION = 80
 ENCODER_A = 13
 ENCODER_B = 6
 # scale for azimuth encoder
-steps_per_degree = 725*.86
+steps_per_degree = 725/1.41   #*.86*152/360
 
 from enum import Enum
 class ShutterState(Enum) :
@@ -255,16 +255,22 @@ class Dome :
         if self.verbose : print('stopping dome rotation ')
         set_relay(DOME_POWER,0)
         self.slewing = False
+        self.enc.delta=[0,1,-1,2,-1,0,-2,1,1,-2,0,-1,2,-1,1,0]
+        print('counter: ',self.enc.counter)
 
     def rotate(self,cw=True) :
         """ Start dome rotating
         """
         self.stop()
         if self.verbose : print('starting dome rotation ', cw)
+        self.enc.counter=[0,0,0,0]
         if cw :
             set_relay(DOME_DIRECTION,0)
+        #    self.enc.delta=[0,1,3,2,3,0,2,1,1,2,0,3,2,3,1,0]
         else :
             set_relay(DOME_DIRECTION,1)
+        #    self.enc.delta=[0,-3,-1,-2,-1,0,-2,-3,-3,-2,0,-1,-2,-1,-3,0]
+
         set_relay(DOME_POWER,1)
         self.slewing = True
 
