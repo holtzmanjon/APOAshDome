@@ -1,9 +1,8 @@
 """
 Encoder library for Raspberry Pi for measuring quadrature encoded signals.
-created by Mivallion <mivallion@gmail.com>
-Version 1.0 - 01 april 2020 - inital release
+based on routine by Mivallion <mivallion@gmail.com>
+but mostly modified to use pigpio
 """
-import RPi.GPIO as GPIO
 import pigpio
 
 class Encoder(object):
@@ -18,40 +17,60 @@ class Encoder(object):
         self.A = A
         self.B = B
         self.pos = 0
+        self.delta=[0,1,-1,2,-1,0,-2,1,1,-2,0,-1,2,-1,1,0]
+        self.counter = [0,0,0,0]
         self.state = 0
-        #GPIO.setmode(GPIO.BCM)
-        #GPIO.setup(A, GPIO.IN)
-        #GPIO.setup(B, GPIO.IN)
-        #if GPIO.input(A):
-        #    self.state |= 1
-        #if GPIO.input(B):
-        #    self.state |= 2
-        #GPIO.remove_event_detect(A)
-        #GPIO.remove_event_detect(B)
-        #GPIO.add_event_detect(A, GPIO.BOTH, callback=self.__update)
-        #GPIO.add_event_detect(B, GPIO.BOTH, callback=self.__update)
  
         self.pi=pigpio.pi()
-        self.pi.set_mode( A, pigpio.INPUT) 
-        self.pi.set_mode( B, pigpio.INPUT) 
-        cb1 = self.pi.callback(A, pigpio.EITHER_EDGE, self.__update)
-        cb2 = self.pi.callback(B, pigpio.EITHER_EDGE, self.__update)
+        #self.pi.set_mode( A, pigpio.INPUT) 
+        #self.pi.set_mode( B, pigpio.INPUT) 
+
+        # note that we need to keep track of state with each callback, as events
+        self.stateA = 0
+        self.stateB = 0
+        # may be generated faster than callbacks are called
+        cb1 = self.pi.callback(A, pigpio.EITHER_EDGE, self.__changeA)
+        cb2 = self.pi.callback(B, pigpio.EITHER_EDGE, self.__changeB)
+
+    def __changeA(self,channel,level,tick) :
+        """ Change stateA 
+        """
+        self.stateA = 1 - self.stateA
+        self.__updatepos()
+
+    def __changeB(self,channel,level,tick) :
+        """ Change stateB 
+        """
+        self.stateB = 1 - self.stateB
+        self.__updatepos()
+
+    def __updatepos(self) :
+        """ Calculate updated position
+        """
+        state = self.state & 3
+        if self.stateA :
+            state |= 4
+        if self.stateB :
+            state |= 8
+        self.state = state >> 2
+        self.pos += self.delta[state]
+        self.counter[abs(self.delta[state])] +=1
 
     """
     update() calling every time when value on A or B pins changes.
     It updates the current position based on previous and current states
     of the rotary encoder.
+    But this uses read() which may be inaccurate as state might have changed
     """
-    def __update(self, channel):
+    def __test(self, channel, level, tick):
+        print(channel,level,tick)
+
+    def __update(self, channel, level, tick):
         state = self.state & 3
         if self.pi.read(self.A):
             state |= 4
         if self.pi.read(self.B):
             state |= 8
-        #if GPIO.input(self.A):
-        #    state |= 4
-        #if GPIO.input(self.B):
-        #    state |= 8
 
         self.state = state >> 2
 
@@ -63,7 +82,6 @@ class Encoder(object):
             self.pos += 2
         elif state == 6 or state == 9:
             self.pos -= 2
-
 
     """
     read() simply returns the current position of the rotary encoder.
