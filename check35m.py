@@ -17,6 +17,7 @@ while True :
     start = messin.find('timeStamp')
     stop = messin.find('end')
     stuff = messin[start:stop].replace ("=","='").replace (" ","'; ")
+    print(stuff)
 
     # exec - causes the pieces to become global variables
     exec(stuff)

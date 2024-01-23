@@ -55,8 +55,7 @@ dome_dev = None
 def start_dome_device(logger: logger):
     logger = logger
     global dome_dev
-    dome_dev = Dome(logger)
-
+    dome_dev = Dome(logger=logger)
 
 # --------------------
 # RESOURCE CONTROLLERS
@@ -65,7 +64,23 @@ def start_dome_device(logger: logger):
 @before(PreProcessRequest(maxdev))
 class action:
     def on_put(self, req: Request, resp: Response, devnum: int):
-        resp.text = MethodResponse(req, NotImplementedException()).json
+        #resp.text = MethodResponse(req, NotImplementedException()).json
+        if not dome_dev.connected : ## IS DEV CONNECTED ##:
+            resp.text = PropertyResponse(None, req,
+                            NotConnectedException()).json
+            return
+        print('req: ', req)
+        #action = get_request_field('ActionName', req)      # Raises 400 bad request if missing
+        action='weather'
+        print('action: ', action)
+        try:
+            # -----------------------------
+            getattr(dome_dev,action)() ### DEVICE OPERATION(PARAM) ###
+            # -----------------------------
+            resp.text = MethodResponse(req).json
+        except Exception as ex:
+            resp.text = MethodResponse(req,
+                            DriverException(0x500, 'Action failed', ex)).json
 
 @before(PreProcessRequest(maxdev))
 class commandblind:
@@ -127,7 +142,19 @@ class name():
 @before(PreProcessRequest(maxdev))
 class supportedactions:
     def on_get(self, req: Request, resp: Response, devnum: int):
-        resp.text = PropertyResponse([], req).json  # Not PropertyNotImplemented
+        #resp.text = PropertyResponse([], req).json  # Not PropertyNotImplemented
+        if not dome_dev.connected : ##
+            resp.text = PropertyResponse(None, req,
+                            NotConnectedException()).json
+            return
+        try:
+            # ----------------------
+            val = dome_dev.SupportedActions  ## GET PROPERTY ##
+            # ----------------------
+            resp.text = PropertyResponse(val, req).json
+        except Exception as ex:
+            resp.text = PropertyResponse(None, req,
+                            DriverException(0x500, 'Dome.SupportedActions failed', ex)).json
 
 @before(PreProcessRequest(maxdev))
 class altitude:
@@ -540,19 +567,22 @@ class slewtoazimuth:
                             NotConnectedException()).json
             return
         azimuthstr = get_request_field('Azimuth', req)      # Raises 400 bad request if missing
+        print('slewtoazimuth: ', azimuthstr)
         try:
-            azimuth = int(azimuthstr)
+            azimuth = int(float(azimuthstr))
         except:
             resp.text = MethodResponse(req,
                             InvalidValueException(f'Azimuth " + azimuthstr + " not a valid number.')).json
             return
         ### RANGE CHECK AS NEEDED ###       # Raise Alpaca InvalidValueException with details!
+        print('azimuth: ', azimuth)
         if azimuth < 0 or azimuth > 360 :
             resp.text = PropertyResponse(None, req,
                             InvalidValueException('azimuth must be between 0 and 360')).json
             return 
         try:
             # -----------------------------
+            print('calling slewtoazimuth: ', azimuth)
             dome_dev.slewtoazimuth(azimuth)  ### DEVICE OPERATION(PARAM) ###
             # -----------------------------
             resp.text = MethodResponse(req).json
@@ -569,20 +599,27 @@ class synctoazimuth:
                             NotConnectedException()).json
             return
         azimuthstr = get_request_field('Azimuth', req)      # Raises 400 bad request if missing
+        print('synctoazimuth: ', azimuthstr)
         try:
-            azimuth = int(azimuthstr)
+            azimuth = int(float(azimuthstr))
         except:
             resp.text = MethodResponse(req,
                             InvalidValueException(f'Azimuth " + azimuthstr + " not a valid number.')).json
             return
+        ### RANGE CHECK AS NEEDED ###       # Raise Alpaca InvalidValueException with details!
+        if azimuth < 0 or azimuth > 360 :
+            resp.text = PropertyResponse(None, req,
+                            InvalidValueException('azimuth must be between 0 and 360')).json
+            return 
+
         if not dome_dev.cansyncazimuth :
             resp.text = PropertyResponse(None, req,
                             InvalidOperationException()).json
             return
-        ### RANGE CHECK AS NEEDED ###       # Raise Alpaca InvalidValueException with details!
         try:
             # -----------------------------
             ### DEVICE OPERATION(PARAM) ###
+            dome_dev.slewtoazimuth(azimuth)  ### DEVICE OPERATION(PARAM) ###
             # -----------------------------
             resp.text = MethodResponse(req).json
         except Exception as ex:

@@ -10,6 +10,8 @@ import piplates.RELAYplate as RELAY
 import Encoder
 import timer
 import RPi.GPIO as GPIO
+import numpy as np
+import APOSafety
 
 # RELAYPlates relay numbers for different operations
 DOME_POWER = 1      #relay 207  pin 47
@@ -24,18 +26,19 @@ LOWER_POWER = 7
 HOME = 26
 
 # time before shutters are reigster open or closed
-UPPER_TIME = 6
+UPPER_TIME = 1
 LOWER_TIME = 5
 
 # Park and home positions
 PARK_POSITION = 60
 HOME_POSITION = 80
+DOME_TOLERANCE = 3
 
 # GPIO pins for azimuth encoder
 ENCODER_A = 13
 ENCODER_B = 6
 # scale for azimuth encoder
-steps_per_degree = 725/1.41   #*.86*152/360
+steps_per_degree = 725   #*.86*152/360
 
 from enum import Enum
 class ShutterState(Enum) :
@@ -45,23 +48,23 @@ class ShutterState(Enum) :
     shutterClosing = 3  # Dome shutter status closing
     shutterError = 4     # Dome shutter status error
 
-class Dome :
-    def __init__(self, logger : Logger) :
+class Dome() :
+    def __init__(self, logger=None ) :
         """  Initialize dome properties and capabilities
         """
         self.connected = True
         self.altitude = None
-        self.azimuth = HOME_POSITION
+        #try:
         self.is_upper_open = Tristate()
         self.is_upper_closed = Tristate()
         self.is_lower_open = Tristate()
         self.is_lower_closed = Tristate()
-        self.cansetaltitude = True
+        self.cansetaltitude = False
         self.cansetazimuth = True
         self.cansetpark = True
         self.cansetshutter = True
         self.canfindhome = True
-        self.canslave = False
+        self.canslave = True
         self.canpark = True
         self.cansyncazimuth = True
         self.slaved = False
@@ -72,6 +75,36 @@ class Dome :
         self.enc = Encoder.Encoder(ENCODER_A,ENCODER_B)
         GPIO.setup(HOME, GPIO.IN)
         self.start_watchdog()
+        self.start_weather()
+        self.SupportedActions=['weather']
+        try:
+            with open("SavedPosition.txt") as fp :
+                self.azimuth=float(fp.read())
+                self.enc.pos = (self.azimuth - HOME_POSITION) * steps_per_degree
+        except: 
+            self.azimuth = HOME_POSITION
+
+    def save_position(self) :
+        """ Save current position to file
+        """
+        self.get_azimuth()
+        with open("SavedPosition.txt","w") as fp :
+            fp.write('{:7.1f}'.format(self.azimuth))
+
+    def start_weather(self) :
+        """ Start weather monitoring thread
+        """
+        self.safety=APOSafety.Safety()
+        t=Thread(target=self.monitor_weather)
+        t.start()
+
+    def monitor_weather(self,timeout=60) :
+        """ Check weather periodically
+        """
+        while True :
+            if not self.safety.issafe() :
+                self.close_shutter()
+            time.sleep(timeout)
 
     def reset_watchdog(self,timeout=180) :
         """ Reset watchdog periodically
@@ -105,21 +138,21 @@ class Dome :
             time.sleep(0.1)
             continue
         if t.elapsed() < timeout :
-            self.azimuth = HOME_POSITION
-        else :
-            print('Home timer expired before finding home !')
-        t.stop()
-
-    def athome(self) :
-        """ Check if at home position
-        """
-        print(GPIO.input(HOME))
-        if GPIO.input(HOME) :
             self.enc.pos = 0
             self.azimuth = HOME_POSITION
             set_relay(DOME_POWER,0)
             self.slewing = False
             print('hit home')
+        else :
+            print('Home timer expired before finding home !')
+        t.stop()
+        self.save_position()
+
+
+    def athome(self) :
+        """ Check if at home position
+        """
+        if GPIO.input(HOME) :
             return True
         else :
             return False
@@ -146,7 +179,7 @@ class Dome :
         """
         set_relay(UPPER_POWER,0)
         if self.verbose: print('starting shutter open')
-        set_relay(UPPER_DIRECTION,1)
+        set_relay(UPPER_DIRECTION,0)
         set_relay(UPPER_POWER,1)
         self.shutterstatus = ShutterState.shutterOpening.value
         t=Timer(UPPER_TIME,self.set_upper_open)
@@ -157,7 +190,7 @@ class Dome :
         """
         set_relay(UPPER_POWER,0)
         if self.verbose: print('starting shutter close')
-        set_relay(UPPER_DIRECTION,0)
+        set_relay(UPPER_DIRECTION,1)
         set_relay(UPPER_POWER,1)
         self.shutterstatus = ShutterState.shutterClosing.value
         t=Timer(UPPER_TIME,self.set_upper_closed)
@@ -203,10 +236,14 @@ class Dome :
     def open_shutter(self,lower=False) :
         """ Open the dome shutter(s). If lower, wait 10s after starting upper to start lower
         """
-        self.open_upper() 
-        if lower :
-            time.sleep(10)
-            self.open_lower() 
+        if not self.safety.issafe() :
+            print('cannot open shutter due to weather condition!')
+            return
+
+        #self.open_upper() 
+        #if lower :
+        #    time.sleep(10)
+        #    self.open_lower() 
 
     def close_shutter(self,lower=False) :
         """ Close the dome shutter(s). If lower, wait 30s after starting lower to start upper
@@ -220,7 +257,7 @@ class Dome :
         """ Is telescope at park position?
         """
         az = self.get_azimuth()
-        if abs(az-self.park_position) < 1 : 
+        if abs(az-self.park_position) < DOME_TOLERANCE : 
             return True
         else :
             return False
@@ -257,13 +294,15 @@ class Dome :
         self.slewing = False
         self.enc.delta=[0,1,-1,2,-1,0,-2,1,1,-2,0,-1,2,-1,1,0]
         print('counter: ',self.enc.counter)
+        print('counter16: ',self.enc.counter16)
 
     def rotate(self,cw=True) :
         """ Start dome rotating
         """
         self.stop()
         if self.verbose : print('starting dome rotation ', cw)
-        self.enc.counter=[0,0,0,0]
+        self.enc.counter=np.zeros(4,dtype=int)
+        self.enc.counter16=np.zeros(16,dtype=int)
         if cw :
             set_relay(DOME_DIRECTION,0)
         #    self.enc.delta=[0,1,3,2,3,0,2,1,1,2,0,3,2,3,1,0]
@@ -277,7 +316,7 @@ class Dome :
     def get_azimuth(self) :
         """ Get current dome azimuth
         """
-        self.azimuth = self.enc.read()/steps_per_degree + HOME_POSITION
+        self.azimuth = self.enc.pos/steps_per_degree + HOME_POSITION
         self.azimuth %= 360
         return self.azimuth
 
@@ -296,28 +335,32 @@ class Dome :
         print('  current_az',current_az)
         delta = diff(azimuth,current_az)
         print('  delta: ',delta)
-        if delta > 0 :
+        if abs(delta) < DOME_TOLERANCE :
+            return
+        elif delta > 0 :
             self.rotate(1)
         else :
             self.rotate(0)
         t=timer.Timer()
         t.start()
-        while abs(diff(azimuth,self.get_azimuth())) > 1 and t.elapsed()<timeout : 
-            print(self.azimuth)
-            time.sleep(1)
+        while abs(diff(azimuth,self.get_azimuth())) > DOME_TOLERANCE and t.elapsed()<timeout : 
+            #print(self.azimuth)
+            #time.sleep(1)
             continue
         self.stop()
         if t.elapsed() > timeout :
             print('Rotate timer expired before reaching desired azimuth !')
         print('self.azimuth', self.azimuth)
         t.stop()
+        self.save_position()
 
     def slewtoaltitude(self, altitude) :
         return 
         #raise RuntimeError('altitude slew not implemented')
         
     def slave(self,val) :
-        raise RuntimeError('slaving not available') 
+        self.slaved=True
+        #raise RuntimeError('slaving not available') 
 
 def set_relay(bit,value) :
     """ Utility routine to turn RELAYplates relays on (1) or off

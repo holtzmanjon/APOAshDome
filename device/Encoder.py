@@ -4,6 +4,7 @@ based on routine by Mivallion <mivallion@gmail.com>
 but mostly modified to use pigpio
 """
 import pigpio
+import numpy as np
 
 class Encoder(object):
     """
@@ -18,7 +19,8 @@ class Encoder(object):
         self.B = B
         self.pos = 0
         self.delta=[0,1,-1,2,-1,0,-2,1,1,-2,0,-1,2,-1,1,0]
-        self.counter = [0,0,0,0]
+        self.counter = np.zeros(4,dtype=int)
+        self.counter16 = np.zeros(16,dtype=int)
         self.state = 0
  
         self.pi=pigpio.pi()
@@ -26,8 +28,8 @@ class Encoder(object):
         #self.pi.set_mode( B, pigpio.INPUT) 
 
         # note that we need to keep track of state with each callback, as events
-        self.stateA = 0
-        self.stateB = 0
+        self.stateA = self.pi.read(A)
+        self.stateB = self.pi.read(B)
         # may be generated faster than callbacks are called
         cb1 = self.pi.callback(A, pigpio.EITHER_EDGE, self.__changeA)
         cb2 = self.pi.callback(B, pigpio.EITHER_EDGE, self.__changeB)
@@ -35,13 +37,17 @@ class Encoder(object):
     def __changeA(self,channel,level,tick) :
         """ Change stateA 
         """
-        self.stateA = 1 - self.stateA
+        if level == 0 : self.stateA=0
+        elif level == 1 : self.stateA=1
+        #self.stateA = 1 - self.stateA
         self.__updatepos()
 
     def __changeB(self,channel,level,tick) :
         """ Change stateB 
         """
-        self.stateB = 1 - self.stateB
+        if level == 0 : self.stateB=0
+        elif level == 1 : self.stateB=1
+        #self.stateB = 1 - self.stateB
         self.__updatepos()
 
     def __updatepos(self) :
@@ -55,6 +61,7 @@ class Encoder(object):
         self.state = state >> 2
         self.pos += self.delta[state]
         self.counter[abs(self.delta[state])] +=1
+        self.counter16[state] +=1
 
     """
     update() calling every time when value on A or B pins changes.
