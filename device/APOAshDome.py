@@ -26,7 +26,7 @@ LOWER_POWER = 7
 HOME = 26
 
 # time before shutters are reigster open or closed
-UPPER_TIME = 1
+UPPER_TIME = 86
 LOWER_TIME = 5
 
 # Park and home positions
@@ -64,7 +64,7 @@ class Dome() :
         self.cansetpark = True
         self.cansetshutter = True
         self.canfindhome = True
-        self.canslave = True
+        self.canslave = False
         self.canpark = True
         self.cansyncazimuth = True
         self.slaved = False
@@ -80,7 +80,7 @@ class Dome() :
         try:
             with open("SavedPosition.txt") as fp :
                 self.azimuth=float(fp.read())
-                self.enc.pos = (self.azimuth - HOME_POSITION) * steps_per_degree
+                self.enc.pos = int((self.azimuth - HOME_POSITION) * steps_per_degree)
         except: 
             self.azimuth = HOME_POSITION
 
@@ -94,7 +94,7 @@ class Dome() :
     def start_weather(self) :
         """ Start weather monitoring thread
         """
-        self.safety=APOSafety.Safety()
+        self.safety=APOSafety.Safety(warnonly=False)
         t=Thread(target=self.monitor_weather)
         t.start()
 
@@ -102,7 +102,8 @@ class Dome() :
         """ Check weather periodically
         """
         while True :
-            if not self.safety.issafe() :
+            if not self.safety.issafe() and \
+               not (self.shutterstatus == ShutterState.shutterClosed.value) : 
                 self.close_shutter()
             time.sleep(timeout)
 
@@ -240,7 +241,7 @@ class Dome() :
             print('cannot open shutter due to weather condition!')
             return
 
-        #self.open_upper() 
+        self.open_upper() 
         #if lower :
         #    time.sleep(10)
         #    self.open_lower() 
@@ -292,23 +293,27 @@ class Dome() :
         if self.verbose : print('stopping dome rotation ')
         set_relay(DOME_POWER,0)
         self.slewing = False
-        self.enc.delta=[0,1,-1,2,-1,0,-2,1,1,-2,0,-1,2,-1,1,0]
+        self.enc.delta=np.array([0,1,-1,2,-1,0,-2,1,1,-2,0,-1,2,-1,1,0])
         print('counter: ',self.enc.counter)
         print('counter16: ',self.enc.counter16)
+        print('delta: ',self.enc.delta)
+        print('total events: ',np.sum(self.enc.counter16))
+        print('sum: ',np.sum(self.enc.delta*self.enc.counter16))
+        print('pos: ',self.enc.pos)
 
     def rotate(self,cw=True) :
         """ Start dome rotating
         """
         self.stop()
         if self.verbose : print('starting dome rotation ', cw)
-        self.enc.counter=np.zeros(4,dtype=int)
-        self.enc.counter16=np.zeros(16,dtype=int)
+        self.enc.reset()
+
         if cw :
             set_relay(DOME_DIRECTION,0)
-        #    self.enc.delta=[0,1,3,2,3,0,2,1,1,2,0,3,2,3,1,0]
+            #self.enc.delta=[0,1,3,2,3,0,2,1,1,2,0,3,2,3,1,0]
         else :
             set_relay(DOME_DIRECTION,1)
-        #    self.enc.delta=[0,-3,-1,-2,-1,0,-2,-3,-3,-2,0,-1,-2,-1,-3,0]
+            #self.enc.delta=[0,-3,-1,-2,-1,0,-2,-3,-3,-2,0,-1,-2,-1,-3,0]
 
         set_relay(DOME_POWER,1)
         self.slewing = True
@@ -359,8 +364,8 @@ class Dome() :
         #raise RuntimeError('altitude slew not implemented')
         
     def slave(self,val) :
-        self.slaved=True
-        #raise RuntimeError('slaving not available') 
+        #self.slaved=True
+        raise RuntimeError('slaving not available') 
 
 def set_relay(bit,value) :
     """ Utility routine to turn RELAYplates relays on (1) or off

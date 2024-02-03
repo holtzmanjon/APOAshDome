@@ -21,18 +21,30 @@ class Encoder(object):
         self.delta=[0,1,-1,2,-1,0,-2,1,1,-2,0,-1,2,-1,1,0]
         self.counter = np.zeros(4,dtype=int)
         self.counter16 = np.zeros(16,dtype=int)
-        self.state = 0
  
         self.pi=pigpio.pi()
-        #self.pi.set_mode( A, pigpio.INPUT) 
-        #self.pi.set_mode( B, pigpio.INPUT) 
+        self.pi.set_mode( A, pigpio.INPUT) 
+        self.pi.set_mode( B, pigpio.INPUT) 
 
         # note that we need to keep track of state with each callback, as events
-        self.stateA = self.pi.read(A)
-        self.stateB = self.pi.read(B)
+        self.state=0
+        self.reset()
+
+        # note that we need to keep track of state with each callback, as events
         # may be generated faster than callbacks are called
         cb1 = self.pi.callback(A, pigpio.EITHER_EDGE, self.__changeA)
         cb2 = self.pi.callback(B, pigpio.EITHER_EDGE, self.__changeB)
+
+    def reset(self) :
+        self.state = 0
+        self.stateA = np.zeros([1],dtype=np.int16)
+        self.stateB = np.zeros([1],dtype=np.int16)
+        self.stateA = self.pi.read(self.A)
+        self.stateB = self.pi.read(self.B)
+        if self.stateA : self.state |= 1
+        if self.stateB : self.state |= 2
+        self.counter=np.zeros(4,dtype=int)
+        self.counter16=np.zeros(16,dtype=int)
 
     def __changeA(self,channel,level,tick) :
         """ Change stateA 
