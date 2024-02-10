@@ -14,31 +14,31 @@ the rotator gearbox, and a magnetic home sensor.
 
 Specifically, computer control is implemented through four connectors
 on the right side of the dome control box:
--J805A : supplies power and control for dome rotation power
- - Pin 1:
- - Pin 2:
- - Pin 3:
- - Pin 4:
--J806A : supplies power and control for dome rotation direction
- -  Pin 1:
- -  Pin 2:
- -  Pin 3:
- -  Pin 4:
--J807A : supplies control for shutter rotation and direction
- -  Pin 1:
- -  Pin 2:
- -  Pin 3:
- -  Pin 4:
- -  Pin 5:
- -  Pin 6:
- -  Pin 7:
- -  Pin 8:
- -  Pin 9:
--J808A : supplies +24V from watchdog
- -  Pin 1:
- -  Pin 2:
- -  Pin 3:
- -  Pin 4:
+ * J805A : supplies power and control for dome rotation power
+   - Pin 1:
+   - Pin 2:
+   - Pin 3:
+   - Pin 4:
+ * J806A : supplies power and control for dome rotation direction
+   -  Pin 1:
+   -  Pin 2:
+   -  Pin 3:
+   -  Pin 4:
+ * J807A : supplies control for shutter rotation and direction
+   -  Pin 1:
+   -  Pin 2:
+   -  Pin 3:
+   -  Pin 4:
+   -  Pin 5:
+   -  Pin 6:
+   -  Pin 7:
+   -  Pin 8:
+   -  Pin 9:
+ * J808A : supplies +24V from watchdog
+   -  Pin 1:
+   -  Pin 2:
+   -  Pin 3:
+   -  Pin 4:
 
 ## Encoder
 
