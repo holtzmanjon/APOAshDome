@@ -14,22 +14,26 @@ the rotator gearbox, and a magnetic home sensor.
 
 Specifically, computer control is implemented through four connectors
 on the right side of the dome control box:
+
+Relays are triggered by closing circuit to bring relay line to ground. Need
+to confirm below which pins are ground vs which ones are relay control.
+
  * J805A : supplies power and control for dome rotation power
-   - Pin 1:
-   - Pin 2:
-   - Pin 3:
-   - Pin 4:
+   - Pin 1: shield
+   - Pin 2: dome power relay ?
+   - Pin 3: gnd ?
+   - Pin 4: +24V
  * J806A : supplies power and control for dome rotation direction
-   -  Pin 1:
-   -  Pin 2:
-   -  Pin 3:
-   -  Pin 4:
+   -  Pin 1: shield
+   -  Pin 2: dome direction relay ?
+   -  Pin 3: gnd ?
+   -  Pin 4: +24V
  * J807A : supplies control for shutter rotation and direction
-   -  Pin 1:
-   -  Pin 2:
-   -  Pin 3:
-   -  Pin 4:
-   -  Pin 5:
+   -  Pin 1: shield
+   -  Pin 2: shutter power relay ?
+   -  Pin 3: gnd ?
+   -  Pin 4: shutter direction relay?
+   -  Pin 5: gnd ?
    -  Pin 6:
    -  Pin 7:
    -  Pin 8:
