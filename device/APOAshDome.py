@@ -98,12 +98,13 @@ class Dome() :
         t=Thread(target=self.monitor_weather)
         t.start()
 
-    def monitor_weather(self,timeout=60) :
+    def monitor_weather(self,timeout=90) :
         """ Check weather periodically
         """
         while True :
             if not self.safety.issafe() and \
-               not (self.shutterstatus == ShutterState.shutterClosed.value) : 
+               not (self.shutterstatus == ShutterState.shutterClosed.value) and\
+               not (self.shutterstatus == ShutterState.shutterClosing.value) : 
                 self.close_shutter()
             time.sleep(timeout)
 

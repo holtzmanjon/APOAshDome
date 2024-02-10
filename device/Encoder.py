@@ -25,6 +25,8 @@ class Encoder(object):
         self.pi=pigpio.pi()
         self.pi.set_mode( A, pigpio.INPUT) 
         self.pi.set_mode( B, pigpio.INPUT) 
+        #self.pi.set_pull_up_down( A, pigpio.PUD_DOWN)
+        #self.pi.set_pull_up_down( B, pigpio.PUD_DOWN)
 
         # note that we need to keep track of state with each callback, as events
         self.state=0
