@@ -15,30 +15,30 @@ the rotator gearbox, and a magnetic home sensor.
 Specifically, computer control is implemented through four connectors
 on the right side of the dome control box:
 J805A : supplies power and control for dome rotation power
-    Pin 1:
-    Pin 2:
-    Pin 3:
-    Pin 4:
+ - Pin 1:
+ - Pin 2:
+ - Pin 3:
+ - Pin 4:
 J806A : supplies power and control for dome rotation direction
-    Pin 1:
-    Pin 2:
-    Pin 3:
-    Pin 4:
+ -  Pin 1:
+ -  Pin 2:
+ -  Pin 3:
+ -  Pin 4:
 J807A : supplies control for shutter rotation and direction
-    Pin 1:
-    Pin 2:
-    Pin 3:
-    Pin 4:
-    Pin 5:
-    Pin 6:
-    Pin 7:
-    Pin 8:
-    Pin 9:
+ -  Pin 1:
+ -  Pin 2:
+ -  Pin 3:
+ -  Pin 4:
+ -  Pin 5:
+ -  Pin 6:
+ -  Pin 7:
+ -  Pin 8:
+ -  Pin 9:
 J808A : supplies +24V from watchdog
-    Pin 1:
-    Pin 2:
-    Pin 3:
-    Pin 4:
+ -  Pin 1:
+ -  Pin 2:
+ -  Pin 3:
+ -  Pin 4:
 
 ## Encoder
 
@@ -47,6 +47,15 @@ up directly to the Raspberry Pi. This gets +5V from the computer,
 and returns +5V signals, which must be level-shifted to 3.3V before
 input to RPi GPIO pins. Changes in level are detected using pigpiod;
 separation of typical pulse times are several hundred microseconds.
+ -  Pin 1: +5V
+ -  Pin 2: gnd
+ -  Pin 3: Bbar
+ -  Pin 4: B
+ -  Pin 5: Zbar  
+ -  Pin 6: Z  (index)
+ -  Pin 7: Abar
+ -  Pin 8: A
+
 
 ## Home sensor
 
