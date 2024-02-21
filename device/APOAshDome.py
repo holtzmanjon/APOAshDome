@@ -23,7 +23,7 @@ LOWER_DIRECTION = 6
 LOWER_POWER = 7
 
 # GPIO bit for home sensor
-HOME = 26
+HOME = 16
 
 # time before shutters are reigster open or closed
 UPPER_TIME = 86
@@ -35,10 +35,10 @@ HOME_POSITION = 80
 DOME_TOLERANCE = 3
 
 # GPIO pins for azimuth encoder
-ENCODER_A = 13
-ENCODER_B = 6
+ENCODER_A = 5
+ENCODER_B = 12
 # scale for azimuth encoder
-steps_per_degree = 725   #*.86*152/360
+steps_per_degree = -724  
 
 from enum import Enum
 class ShutterState(Enum) :
@@ -140,7 +140,9 @@ class Dome() :
             time.sleep(0.1)
             continue
         if t.elapsed() < timeout :
+            print('Encoder position at home: {:d}'.format(self.enc.pos))
             self.enc.pos = 0
+            print('Setting to zero{:d}'.format(self.enc.pos))
             self.azimuth = HOME_POSITION
             set_relay(DOME_POWER,0)
             self.slewing = False
@@ -345,11 +347,16 @@ class Dome() :
             return
         elif delta > 0 :
             self.rotate(1)
+            #if going CW, undershoot to allow coast
+            delta = -1.0
         else :
             self.rotate(0)
+            #if going CCW, overshoot to allow coast
+            delta = +1.0
         t=timer.Timer()
         t.start()
-        while abs(diff(azimuth,self.get_azimuth())) > DOME_TOLERANCE and t.elapsed()<timeout : 
+        x = lambda azimuth : diff(azimuth,self.get_azimuth()) 
+        while abs(x(azimuth+delta)) > DOME_TOLERANCE/4. and t.elapsed()<timeout : 
             #print(self.azimuth)
             #time.sleep(1)
             continue
@@ -358,6 +365,7 @@ class Dome() :
             print('Rotate timer expired before reaching desired azimuth !')
         print('self.azimuth', self.azimuth)
         t.stop()
+        time.sleep(2)
         self.save_position()
 
     def slewtoaltitude(self, altitude) :
