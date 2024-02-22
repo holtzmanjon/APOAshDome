@@ -10,6 +10,11 @@ project = 'APOAshDome'
 copyright = '2024, Jon Holtzman'
 author = 'Jon Holtzman'
 
+import sys
+import os
+sys.path.insert(0, os.path.abspath('../device/'))
+
+
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 # Add any Sphinx extension module names here, as strings. They can be
