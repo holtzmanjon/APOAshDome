@@ -2,16 +2,21 @@
 Low level inteface to APO Ash Dome
 """
 
-from tristate import Tristate
 import time
+import timer
+import numpy as np
 from threading import Timer, Lock, Thread
 from logging import Logger
-import piplates.RELAYplate as RELAY
+from tristate import Tristate
 import Encoder
-import timer
-import RPi.GPIO as GPIO
-import numpy as np
-import APOSafety
+
+# put in try/except for readthedocs
+try :
+    import piplates.RELAYplate as RELAY
+    import APOSafety
+    import RPi.GPIO as GPIO
+except :
+    print('no APOSafety or RPi.GPIO')
 
 # RELAYPlates relay numbers for different operations
 DOME_POWER = 1      #relay 207  pin 47
