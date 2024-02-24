@@ -13,3 +13,7 @@ Module functions
    :members:
    :member-order: bysource
 
+.. autoclass:: Dome
+   :members:
+   :member-order: bysource
+
