@@ -1,4 +1,3 @@
 numpy
-time
 threading
 logging
