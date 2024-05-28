@@ -99,7 +99,7 @@ class Dome() :
     def start_weather(self) :
         """ Start weather monitoring thread
         """
-        self.safety=APOSafety.Safety(warnonly=False)
+        self.safety=APOSafety.Safety(warnonly=False,use25m=False)
         t=Thread(target=self.monitor_weather)
         t.start()
 
@@ -113,11 +113,12 @@ class Dome() :
                 self.close_shutter()
             time.sleep(timeout)
 
-    def reset_watchdog(self,timeout=180) :
+    def reset_watchdog(self,timeout=110) :
         """ Reset watchdog periodically
         """
         while True :
             set_relay(WATCHDOG_RESET,1)
+            time.sleep(5)
             set_relay(WATCHDOG_RESET,0)
             time.sleep(timeout)
 
