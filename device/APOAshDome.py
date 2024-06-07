@@ -79,8 +79,6 @@ class Dome() :
         self.verbose = True
         self.enc = Encoder.Encoder(ENCODER_A,ENCODER_B)
         GPIO.setup(HOME, GPIO.IN)
-        self.start_watchdog()
-        self.start_weather()
         self.SupportedActions=['weather']
         try:
             with open("SavedPosition.txt") as fp :
@@ -88,6 +86,10 @@ class Dome() :
                 self.enc.pos = int((self.azimuth - HOME_POSITION) * steps_per_degree)
         except: 
             self.azimuth = HOME_POSITION
+        self.logger = logger
+        self.logger.info('Instantiating dome device')
+        self.start_watchdog()
+        self.start_weather()
 
     def save_position(self) :
         """ Save current position to file
@@ -99,7 +101,7 @@ class Dome() :
     def start_weather(self) :
         """ Start weather monitoring thread
         """
-        self.safety=APOSafety.Safety(warnonly=False,use25m=False)
+        self.safety=APOSafety.Safety(warnonly=False,use25m=True)
         t=Thread(target=self.monitor_weather)
         t.start()
 
@@ -117,6 +119,7 @@ class Dome() :
         """ Reset watchdog periodically
         """
         while True :
+            self.logger.info('resetting watchdog')
             set_relay(WATCHDOG_RESET,1)
             time.sleep(5)
             set_relay(WATCHDOG_RESET,0)
@@ -138,7 +141,7 @@ class Dome() :
     def sendhome(self,timeout=180) :
         """ Go to home
         """
-        if self.verbose : print('sending home')
+        if self.verbose : self.logger.info('sending home')
         self.rotate(1)
         t=timer.Timer()
         t.start()
@@ -146,15 +149,15 @@ class Dome() :
             time.sleep(0.1)
             continue
         if t.elapsed() < timeout :
-            print('Encoder position at home: {:d}'.format(self.enc.pos))
+            self.logger.info('Encoder position at home: {:d}'.format(self.enc.pos))
             self.enc.pos = 0
-            print('Setting to zero{:d}'.format(self.enc.pos))
+            self.logger.info('Setting to zero{:d}'.format(self.enc.pos))
             self.azimuth = HOME_POSITION
             set_relay(DOME_POWER,0)
             self.slewing = False
-            print('hit home')
+            self.logger.info('hit home')
         else :
-            print('Home timer expired before finding home !')
+            self.logger.info('Home timer expired before finding home !')
         t.stop()
         self.save_position()
 
@@ -170,7 +173,7 @@ class Dome() :
     def set_upper_open(self) :
         """ Set upper shutter status to open and turn off shutter power 
         """
-        if self.verbose: print('setting upper shutter open')
+        if self.verbose: self.logger.info('setting upper shutter open')
         self.is_upper_open = True
         self.shutterstatus = ShutterState.shutterOpen.value
         set_relay(UPPER_POWER,0)
@@ -179,7 +182,7 @@ class Dome() :
     def set_upper_closed(self) :
         """ Set upper shutter status to closed and turn off shutter power 
         """
-        if self.verbose: print('setting upper shutter closed')
+        if self.verbose: self.logger.info('setting upper shutter closed')
         self.is_upper_open = False
         self.shutterstatus = ShutterState.shutterClosed.value
         set_relay(UPPER_POWER,0)
@@ -188,7 +191,7 @@ class Dome() :
         """ Open upper shutter asynchronously
         """
         set_relay(UPPER_POWER,0)
-        if self.verbose: print('starting shutter open')
+        if self.verbose: self.logger.info('starting shutter open')
         set_relay(UPPER_DIRECTION,0)
         set_relay(UPPER_POWER,1)
         self.shutterstatus = ShutterState.shutterOpening.value
@@ -199,7 +202,7 @@ class Dome() :
         """ Close upper shutter
         """
         set_relay(UPPER_POWER,0)
-        if self.verbose: print('starting shutter close')
+        if self.verbose: self.logger.info('starting shutter close')
         set_relay(UPPER_DIRECTION,1)
         set_relay(UPPER_POWER,1)
         self.shutterstatus = ShutterState.shutterClosing.value
@@ -247,7 +250,7 @@ class Dome() :
         """ Open the dome shutter(s). If lower, wait 10s after starting upper to start lower
         """
         if not self.safety.issafe() :
-            print('cannot open shutter due to weather condition!')
+            self.logger.info('cannot open shutter due to weather condition!')
             return
 
         self.open_upper() 
@@ -287,34 +290,34 @@ class Dome() :
     def sendpark(self) :
         """ Go to park
         """
-        if self.verbose : print('sending to park')
+        if self.verbose : self.logger.info('sending to park')
         self.slewtoazimuth(self.park_position)
         
     def abort_slew(self) :
         """ Turn off dome rotation power
         """
-        if self.verbose : print('abort: turning dome rotation power off')
+        if self.verbose : self.logger.info('abort: turning dome rotation power off')
         self.stop()
 
     def stop(self) :
         """ Stop dome rotation
         """
-        if self.verbose : print('stopping dome rotation ')
+        if self.verbose : self.logger.info('stopping dome rotation ')
         set_relay(DOME_POWER,0)
         self.slewing = False
         self.enc.delta=np.array([0,1,-1,2,-1,0,-2,1,1,-2,0,-1,2,-1,1,0])
-        print('counter: ',self.enc.counter)
-        print('counter16: ',self.enc.counter16)
-        print('delta: ',self.enc.delta)
-        print('total events: ',np.sum(self.enc.counter16))
-        print('sum: ',np.sum(self.enc.delta*self.enc.counter16))
-        print('pos: ',self.enc.pos)
+        self.logger.debug('counter: ',self.enc.counter)
+        self.logger.debug('counter16: ',self.enc.counter16)
+        self.logger.debug('delta: ',self.enc.delta)
+        self.logger.debug('total events: ',np.sum(self.enc.counter16))
+        self.logger.debug('sum: ',np.sum(self.enc.delta*self.enc.counter16))
+        self.logger.debug('pos: ',self.enc.pos)
 
     def rotate(self,cw=True) :
         """ Start dome rotating
         """
         self.stop()
-        if self.verbose : print('starting dome rotation ', cw)
+        if self.verbose : self.logger.info('starting dome rotation ', cw)
         self.enc.reset()
 
         if cw :
@@ -345,10 +348,10 @@ class Dome() :
         """
         current_az = self.azimuth
 
-        print('desired_az',azimuth)
-        print('  current_az',current_az)
+        self.logger.info('desired_az',azimuth)
+        self.logger.info('  current_az',current_az)
         delta = diff(azimuth,current_az)
-        print('  delta: ',delta)
+        self.logger.info('  delta: ',delta)
         if abs(delta) < DOME_TOLERANCE :
             return
         elif delta > 0 :
@@ -368,8 +371,8 @@ class Dome() :
             continue
         self.stop()
         if t.elapsed() > timeout :
-            print('Rotate timer expired before reaching desired azimuth !')
-        print('self.azimuth', self.azimuth)
+            self.logger.info('Rotate timer expired before reaching desired azimuth !')
+        self.logger.info('self.azimuth', self.azimuth)
         t.stop()
         time.sleep(2)
         self.save_position()

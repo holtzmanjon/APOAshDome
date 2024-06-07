@@ -81,6 +81,7 @@ def init_logging():
     handler.setFormatter(formatter)
     handler.doRollover()                                            # Always start with fresh log
     logger.addHandler(handler)
+    
     if not Config.log_to_stdout:
         """
             This allows control of logging to stdout by simply
@@ -89,5 +90,5 @@ def init_logging():
             by logging.basicConfig()
         """
         logger.debug('Logging to stdout disabled in settings')
-        logger.removeHandler(logger.handlers[0])    # This is the stdout handler
+        #logger.removeHandler(logger.handlers[0])    # This is the stdout handler
     return logger
