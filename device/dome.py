@@ -575,14 +575,12 @@ class slewtoazimuth:
                             InvalidValueException(f'Azimuth " + azimuthstr + " not a valid number.')).json
             return
         ### RANGE CHECK AS NEEDED ###       # Raise Alpaca InvalidValueException with details!
-        print('azimuth: ', azimuth)
         if azimuth < 0 or azimuth > 360 :
             resp.text = PropertyResponse(None, req,
                             InvalidValueException('azimuth must be between 0 and 360')).json
             return 
         try:
             # -----------------------------
-            print('calling slewtoazimuth: ', azimuth)
             dome_dev.slewtoazimuth(azimuth)  ### DEVICE OPERATION(PARAM) ###
             # -----------------------------
             resp.text = MethodResponse(req).json
