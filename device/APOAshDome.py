@@ -306,12 +306,12 @@ class Dome() :
         set_relay(DOME_POWER,0)
         self.slewing = False
         self.enc.delta=np.array([0,1,-1,2,-1,0,-2,1,1,-2,0,-1,2,-1,1,0])
-        self.logger.debug('counter: {:d}'.format(self.enc.counter))
-        self.logger.debug('counter16: {:d}'.format(self.enc.counter16))
-        self.logger.debug('delta: {:f}'.format(self.enc.delta))
-        self.logger.debug('total events: {:d}'.format(np.sum(self.enc.counter16)))
-        self.logger.debug('sum: {:f}'.format(np.sum(self.enc.delta*self.enc.counter16)))
-        self.logger.debug('pos: {:d}'.format(self.enc.pos))
+        #self.logger.debug('counter: {:d}'.format(self.enc.counter))
+        #self.logger.debug('counter16: {:d}'.format(self.enc.counter16))
+        #self.logger.debug('delta: {:f}'.format(self.enc.delta))
+        #self.logger.debug('total events: {:d}'.format(np.sum(self.enc.counter16)))
+        #self.logger.debug('sum: {:f}'.format(np.sum(self.enc.delta*self.enc.counter16)))
+        #self.logger.debug('pos: {:d}'.format(self.enc.pos))
 
     def rotate(self,cw=True) :
         """ Start dome rotating
