@@ -141,7 +141,7 @@ class Dome() :
     def sendhome(self,timeout=180) :
         """ Go to home
         """
-        if self.verbose : self.logger.info('sending home')
+        self.logger.info('sending home')
         self.rotate(1)
         t=timer.Timer()
         t.start()
@@ -173,7 +173,7 @@ class Dome() :
     def set_upper_open(self) :
         """ Set upper shutter status to open and turn off shutter power 
         """
-        if self.verbose: self.logger.info('setting upper shutter open')
+        self.logger.info('setting upper shutter open')
         self.is_upper_open = True
         self.shutterstatus = ShutterState.shutterOpen.value
         set_relay(UPPER_POWER,0)
@@ -182,7 +182,7 @@ class Dome() :
     def set_upper_closed(self) :
         """ Set upper shutter status to closed and turn off shutter power 
         """
-        if self.verbose: self.logger.info('setting upper shutter closed')
+        self.logger.info('setting upper shutter closed')
         self.is_upper_open = False
         self.shutterstatus = ShutterState.shutterClosed.value
         set_relay(UPPER_POWER,0)
@@ -191,7 +191,7 @@ class Dome() :
         """ Open upper shutter asynchronously
         """
         set_relay(UPPER_POWER,0)
-        if self.verbose: self.logger.info('starting shutter open')
+        self.logger.info('starting shutter open')
         set_relay(UPPER_DIRECTION,0)
         set_relay(UPPER_POWER,1)
         self.shutterstatus = ShutterState.shutterOpening.value
@@ -202,7 +202,7 @@ class Dome() :
         """ Close upper shutter
         """
         set_relay(UPPER_POWER,0)
-        if self.verbose: self.logger.info('starting shutter close')
+        self.logger.info('starting shutter close')
         set_relay(UPPER_DIRECTION,1)
         set_relay(UPPER_POWER,1)
         self.shutterstatus = ShutterState.shutterClosing.value
@@ -290,19 +290,19 @@ class Dome() :
     def sendpark(self) :
         """ Go to park
         """
-        if self.verbose : self.logger.info('sending to park')
+        self.logger.info('sending to park')
         self.slewtoazimuth(self.park_position)
         
     def abort_slew(self) :
         """ Turn off dome rotation power
         """
-        if self.verbose : self.logger.info('abort: turning dome rotation power off')
+        self.logger.info('abort: turning dome rotation power off')
         self.stop()
 
     def stop(self) :
         """ Stop dome rotation
         """
-        if self.verbose : self.logger.info('stopping dome rotation ')
+        self.logger.info('stopping dome rotation ')
         set_relay(DOME_POWER,0)
         self.slewing = False
         self.enc.delta=np.array([0,1,-1,2,-1,0,-2,1,1,-2,0,-1,2,-1,1,0])
