@@ -372,7 +372,7 @@ class Dome() :
         self.stop()
         if t.elapsed() > timeout :
             self.logger.info('Rotate timer expired before reaching desired azimuth !')
-        self.logger.info('self.azimuth', self.azimuth)
+        self.logger.info('self.azimuth: {:f}'.format(self.azimuth))
         t.stop()
         time.sleep(2)
         self.save_position()
