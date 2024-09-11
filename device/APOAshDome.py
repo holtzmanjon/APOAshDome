@@ -306,18 +306,18 @@ class Dome() :
         set_relay(DOME_POWER,0)
         self.slewing = False
         self.enc.delta=np.array([0,1,-1,2,-1,0,-2,1,1,-2,0,-1,2,-1,1,0])
-        self.logger.debug('counter: ',self.enc.counter)
-        self.logger.debug('counter16: ',self.enc.counter16)
-        self.logger.debug('delta: ',self.enc.delta)
-        self.logger.debug('total events: ',np.sum(self.enc.counter16))
-        self.logger.debug('sum: ',np.sum(self.enc.delta*self.enc.counter16))
-        self.logger.debug('pos: ',self.enc.pos)
+        self.logger.debug('counter: {:d}'.format(self.enc.counter))
+        self.logger.debug('counter16: {:d}'.format(self.enc.counter16))
+        self.logger.debug('delta: {:f}'.format(self.enc.delta))
+        self.logger.debug('total events: {:d}'.format(np.sum(self.enc.counter16)))
+        self.logger.debug('sum: {:f}'.format(np.sum(self.enc.delta*self.enc.counter16)))
+        self.logger.debug('pos: {:d}'.format(self.enc.pos))
 
     def rotate(self,cw=True) :
         """ Start dome rotating
         """
         self.stop()
-        if self.verbose : self.logger.info('starting dome rotation ', cw)
+        if self.verbose : self.logger.info('starting dome rotation: {:d} '.format(cw))
         self.enc.reset()
 
         if cw :
@@ -348,10 +348,10 @@ class Dome() :
         """
         current_az = self.azimuth
 
-        self.logger.info('desired_az',azimuth)
-        self.logger.info('  current_az',current_az)
+        self.logger.info('desired_az: {:f}'.format(azimuth))
+        self.logger.info('  current_az: {:f}'.format(current_az))
         delta = diff(azimuth,current_az)
-        self.logger.info('  delta: ',delta)
+        self.logger.info('  delta: {:f}'.format(delta))
         if abs(delta) < DOME_TOLERANCE :
             return
         elif delta > 0 :
