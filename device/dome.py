@@ -566,6 +566,7 @@ class slewtoazimuth:
             resp.text = PropertyResponse(None, req,
                             NotConnectedException()).json
             return
+        print('req: ', req)
         azimuthstr = get_request_field('Azimuth', req)      # Raises 400 bad request if missing
         try:
             azimuth = int(float(azimuthstr))
